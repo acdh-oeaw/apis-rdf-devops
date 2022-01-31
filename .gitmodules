@@ -1,6 +1,9 @@
 [submodule "apis_core_submodule"]
 	path = apis-core
-	url = git@gitlab.com:acdh-oeaw/apis/apis-core.git
+	url = ../apis-core.git
 [submodule "apis_ontologies_submodule"]
 	path = apis-ontologies
-	url = git@gitlab.com:acdh-oeaw/apis/apis-ontologies.git
+	url = ../apis-ontologies.git
+[submodule "manuelle_korrektur_jelinek_submodule"]
+	path = manuelle-korrektur-jelinek
+	url = ../../jwv/manuelle-korrektur.git
