@@ -1,0 +1,314 @@
+<!-- LEAFLET -->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+<!-- START SIGMA IMPORTS -->
+<script src="../src/sigma.core.js"></script>
+<script src="../src/conrad.js"></script>
+<script src="../src/utils/sigma.utils.js"></script>
+<script src="../src/utils/sigma.polyfills.js"></script>
+<script src="../src/sigma.settings.js"></script>
+<script src="../src/classes/sigma.classes.dispatcher.js"></script>
+<script src="../src/classes/sigma.classes.configurable.js"></script>
+<script src="../src/classes/sigma.classes.graph.js"></script>
+<script src="../src/classes/sigma.classes.camera.js"></script>
+<script src="../src/classes/sigma.classes.quad.js"></script>
+<script src="../src/captors/sigma.captors.mouse.js"></script>
+<script src="../src/captors/sigma.captors.touch.js"></script>
+<script src="../src/renderers/sigma.renderers.canvas.js"></script>
+<script src="../src/renderers/sigma.renderers.webgl.js"></script>
+<script src="../src/renderers/sigma.renderers.svg.js"></script>
+<script src="../src/renderers/sigma.renderers.def.js"></script>
+<script src="../src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+<script src="../src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+<script src="../src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+<script src="../src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+<script src="../src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="../src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+<script src="../src/renderers/svg/sigma.svg.utils.js"></script>
+<script src="../src/renderers/svg/sigma.svg.nodes.def.js"></script>
+<script src="../src/renderers/svg/sigma.svg.edges.def.js"></script>
+<script src="../src/renderers/svg/sigma.svg.edges.curve.js"></script>
+<script src="../src/renderers/svg/sigma.svg.edges.curvedArrow.js"></script>
+<script src="../src/renderers/svg/sigma.svg.labels.def.js"></script>
+<script src="../src/renderers/svg/sigma.svg.hovers.def.js"></script>
+<script src="../src/middlewares/sigma.middlewares.rescale.js"></script>
+<script src="../src/middlewares/sigma.middlewares.copy.js"></script>
+<script src="../src/misc/sigma.misc.animation.js"></script>
+<script src="../src/misc/sigma.misc.bindEvents.js"></script>
+<script src="../src/misc/sigma.misc.bindDOMEvents.js"></script>
+<script src="../src/misc/sigma.misc.drawHovers.js"></script>
+<!-- END SIGMA IMPORTS -->
+<script src="../plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<script src="../plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+<script src="../plugins/sigma.plugins.filter/sigma.plugins.filter.js"></script>
+
+<script src="../plugins/sigma.plugins.leaflet/sigma.plugins.leaflet.js"></script>
+
+<script src="../plugins/sigma.renderers.linkurious/settings.js"></script>
+<script src="../plugins/sigma.renderers.linkurious/canvas/sigma.canvas.labels.def.js"></script>
+<script src="../plugins/sigma.renderers.linkurious/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="../plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
+<div id="container">
+  <style>
+    #map-container,
+    #graph-container {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+    }
+    #map-container {
+      transition: visibility 0.3s, opacity 0.3s linear;
+    }
+  </style>
+  <!-- IMPORTANT ORDER: -->
+  <div id="map-container"></div>
+  <div id="graph-container"></div>
+</div>
+<script>
+var sigmaInstance,
+    g = {
+      nodes: [{
+        id: 'n0',
+        label: 'London',
+        x: Math.random(),
+        y: Math.random(),
+        lat: 51.505, // mandatory field
+        lng: -0.09, // mandatory field
+        size: 1,
+        // hidden: true,
+        color: 'rgb(95, 218, 162)'
+      },{
+        id: 'n1',
+        label: 'Paris',
+        x: Math.random(),
+        y: Math.random(),
+        lat: 48.853, // mandatory field
+        lng: 2.349, // mandatory field
+        size: 1,
+        color: 'rgb(95, 218, 162)'
+      },{
+        id: 'n2',
+        label: 'nowhere',
+        x: Math.random(),
+        y: Math.random(),
+        size: 1,
+        color: 'red'
+      }],
+      edges: [{
+        id: 'e0',
+        source: 'n0',
+        target: 'n1',
+        size: 1,
+        color: '#000'
+      }, {
+        id: 'e1',
+        source: 'n0',
+        target: 'n2',
+        size: 1,
+        color: 'red'
+      }]
+    };
+
+// mandatory if we use the dragNodes plugin:
+sigma.renderers.def = sigma.renderers.canvas;
+
+// Instantiate sigma
+sigmaInstance = new sigma({
+  graph: g,
+  container: 'graph-container',
+  settings: {
+    // style the nodes to spot them easily:
+    nodeBorderSize: 3,
+    defaultNodeBorderColor: '#fff',
+    nodeOuterBorderSize: 2,
+  }
+  // THESE SETTINGS ARE APPLIED BY THE PLUGIN WHEN IT IS ENABLED:
+  // settings: {
+  //   // Leaflet zoom is discrete while Sigma zoom is continuous!
+  //   // We use sigma zoom ratio as a binary switch.
+  //   // It will zoom to the center of the view regardless of where the mouse was.
+  //   zoomingRatio: 0.999999999,
+  //   doubleClickZoomingRatio: 0.999999999,
+  //   // Non-instant zoom can trigger the coordinatesUpdated event multiple times:
+  //   mouseZoomDuration: 0,
+  //   doubleClickZoomDuration: 0,
+  //   // Disable automatic fit-to-screen:
+  //   autoRescale: false,
+  //   // Disable inertia because of inaccurate node position:
+  //   mouseInertiaDuration: 0,
+  //   mouseInertiaRatio: 1,
+  //   touchInertiaDuration: 0,
+  //   touchInertiaRatio: 1
+  // }
+});
+
+
+// All basemaps below provide neutral background with minimal colors, labels, and features.
+// More providers available at https://leaflet-extras.github.io/leaflet-providers/preview/
+
+// (ArcGIS) Esri.WorldGrayCanvas layer
+// http://www.arcgis.com/home/item.html?id=8b3d38c0819547faa83f7b7aca80bd76
+var Esri_WorldGrayCanvas = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  detectRetina: true,
+  attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+  maxZoom: 16
+});
+
+// OpenStreetMap.BlackAndWhite layer
+var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+  detectRetina: true,
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+});
+
+// Stamen.TonerLite layer
+var Stamen_TonerLite = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', {
+  detectRetina: true,
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+// MapBox.Light layer
+var MapBox_Light = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  detectRetina: true,
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy <a href="http://mapbox.com">Mapbox</a>',
+  id: 'mapbox.light',
+  accessToken: 'pk.eyJ1Ijoic2hleW1hbm4iLCJhIjoiY2lqNGZmanhpMDAxaHc4bTNhZGFrcHZleiJ9.VliJNQs7QBK5e5ZmYl9RTw'
+});
+
+// CartoDB.Positron layer
+var CartoDB_Positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  detectRetina: true,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
+
+// MapQuestOpen Aerial layer
+var MapQuestOpen_Aerial = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg', {
+  detectRetina: true,
+  attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency',
+  subdomains: '1234',
+  maxZoom: 11
+});
+
+
+// Add City markers
+var london = L.marker([51.505, -0.09]).bindPopup('This is London, UK.'),
+    paris = L.marker([48.853, 2.349]).bindPopup('This is Paris, FR.'),
+    berlin = L.marker([52.524, 13.41]).bindPopup('This is Berlin, DE.');
+
+var cities = L.layerGroup([paris, london, berlin]);
+
+
+// Instantiate Leaflet
+var map = L.map('map-container', {
+  layers: [Esri_WorldGrayCanvas],
+  // avoid unexpected moves:
+  scrollWheelZoom: 'center',
+  doubleClickZoom: 'center',
+  bounceAtZoomLimits: false,
+  keyboard: false
+}).setView([48.853, 2.349], 7); // Init view centered on Paris
+
+
+var baseMaps = {
+  "Esri.WorldGrayCanvas": Esri_WorldGrayCanvas,
+  "OpenStreetMap.BlackAndWhite": OpenStreetMap_BlackAndWhite,
+  "Stamen.TonerLite": Stamen_TonerLite,
+  "MapBox.Light": MapBox_Light,
+  "CartoDB.Positron": CartoDB_Positron,
+  "MapQuestOpen.Aerial": MapQuestOpen_Aerial
+};
+
+var overlayMaps = {
+  "Cities": cities
+};
+
+// Add control, see http://leafletjs.com/examples/layers-control.html
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+// Instantiate Sigma plugin for Leaflet with optional animation settings
+var leafletPlugin = sigma.plugins.leaflet(sigmaInstance, map, {
+  easing: 'cubicInOut',
+  duration: 800
+});
+
+leafletPlugin.bind('enabled', function(event) {
+  console.log(event);
+});
+leafletPlugin.bind('disabled', function(event) {
+  console.log(event);
+});
+
+
+// Initialize the dragNodes plugin:
+var dragListener = sigma.plugins.dragNodes(sigmaInstance, sigmaInstance.renderers[0]);
+
+// The geographical coordinates of the dragged nodes will be updated
+// to their new location to preserve their position during zoom.
+leafletPlugin.bindDragListener(dragListener);
+
+// Initialize the filter plugin:
+var filter = sigma.plugins.filter(sigmaInstance);
+
+// Use a filter to hide nodes with no geo coordinates
+leafletPlugin.bindFilter(filter);
+
+
+leafletPlugin.enable();
+
+
+// Listen to some map events
+map.on("click dblclick contextmenu", function (e) {
+  console.log(e);
+});
+
+
+// How to add a node and update its coordinates
+sigmaInstance.graph.addNode({
+  id: 'n3',
+  label: 'Berlin',
+  x: Math.random(),
+  y: Math.random(),
+  lat: 52.524, // mandatory field
+  lng: 13.41, // mandatory field
+  size: 1,
+  color: '#000'
+});
+
+sigmaInstance.graph.addEdge({
+  id: 'e2',
+  source: 'n0',
+  target: 'n3',
+  size: 1,
+  color: '#000'
+});
+
+leafletPlugin.syncNodes('n3');
+
+// Fit the view to the graph
+leafletPlugin.fitBounds();
+
+// We can disable the integration
+// leafletPlugin.disable();
+
+// We can kill and restart the plugin at will.
+// Notice that the Leaflet map itself is not killed.
+// sigma.plugins.killLeafletPlugin(sigmaInstance);
+
+</script>

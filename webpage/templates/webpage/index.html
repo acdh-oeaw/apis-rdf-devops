@@ -1,0 +1,30 @@
+{% extends "webpage/base.html" %}
+{% load static %}
+{% load stats_extras %}
+{% load webpage_extras %}
+{% block content %}
+
+<div class="jumbotron" style="min-height: 400px; padding:0; background-image: url('{{ PROJECT_TITLE_IMG }}')" title="">
+</div>
+<div class="container">
+        <div class="card card-index">
+            <div class="card-body">
+                <h1 class="text-center title-index">
+                {% projects_metadata 'title' %}
+                </h1>
+                <p class="text-center text-muted paragraph-index">
+                    {% projects_metadata 'subtitle' %}
+                </p>
+                <hr class="hr-index"/>
+                <p class="text-justify">
+                    {% projects_metadata 'description' %}
+		        </p>
+                <div class="text-right">
+                    <a href="/apis/entities/entity/person/list/" class="btn btn-lg btn-index pulse" class="pull-right">
+                    <b><i class="fa fa-angle-right"></i></b>&nbsp;&nbsp;explore
+                    </a>
+                </div>
+            <hr />
+        </div>
+    </div>
+{% endblock %}

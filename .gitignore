@@ -1,0 +1,4 @@
+.devcontainer/
+*.pyc
+.idea
+staticfiles/

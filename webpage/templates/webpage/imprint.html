@@ -1,0 +1,13 @@
+{% extends "webpage/base.html" %}
+{% load static %}
+{% load webpage_extras %}
+{% block title %} Imprint {% endblock %}
+{% block content %}
+<div class="container">
+<div class="card imprint">
+<div class="card-body">
+    {{ imprint_body|safe }}
+</div>
+</div>
+</div>
+{% endblock %}

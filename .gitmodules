@@ -1,0 +1,6 @@
+[submodule "apis_core_submodule"]
+	path = apis-core
+	url = git@gitlab.com:acdh-oeaw/apis/apis-core.git
+[submodule "apis_ontologies_submodule"]
+	path = apis-ontologies
+	url = git@gitlab.com:acdh-oeaw/apis/apis-ontologies.git
