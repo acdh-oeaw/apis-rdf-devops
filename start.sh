@@ -2,6 +2,7 @@
 #useradd -M celery
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
+rm apis_ontology
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
 python manage.py collectstatic
 python manage.py migrate
