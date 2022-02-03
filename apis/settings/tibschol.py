@@ -68,6 +68,6 @@ LANGUAGE_CODE = "de"
 # APIS_COMPONENTS = ['deep learning']
 
 # APIS_BLAZEGRAPH = ('https://blazegraph.herkules.arz.oeaw.ac.at/metaphactory-play/sparql', 'metaphactory-play', 'KQCsD24treDY')
-INSTALLED_APPS += ["apis_ontology"]
+#INSTALLED_APPS += ["apis_ontology"]
 
 APIS_RELATIONS_FILTER_EXCLUDE += ["annotation", "annotation_set_relation"]
