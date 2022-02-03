@@ -6,6 +6,8 @@ ls -la
 pwd
 rm apis_ontology
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
+ls -la
+pwd
 python manage.py collectstatic
 python manage.py migrate
 python manage.py collectstatic --noinput
