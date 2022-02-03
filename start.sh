@@ -8,7 +8,7 @@ rm apis_ontology
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
 ls -la
 pwd
-python manage.py collectstatic
+echo $APIS_RDF_ONTOLOGY
 python manage.py migrate
 python manage.py collectstatic --noinput
 #ls /var/solr_new/paas_solr
