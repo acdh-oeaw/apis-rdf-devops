@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     "charts",
     "infos",
     "csvexport",
+    "apis_ontology"
 ]
 
 USE_X_FORWARDED_HOST = True
