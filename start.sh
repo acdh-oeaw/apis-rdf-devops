@@ -3,6 +3,7 @@
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
+python manage.py collectstatic
 python manage.py migrate
 python manage.py collectstatic --noinput
 #ls /var/solr_new/paas_solr
