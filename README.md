@@ -1,92 +1,108 @@
-# APIS RDF Devops
+# APIS RDF DEVOPS (working but still experimental)
 
-Repo to deploy our APIS RDF instances from
+## how to set up locally
 
-## Getting started
+### pre-requisites
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+* Have a local mysql server installed, ideally version 5.7, since this is what production uses (a persistence image might be integrated here in the future)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+* Create a database and a user for your project, e.g. 
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/acdh-oeaw/apis/apis-rdf-devops.git
-git branch -M main
-git push -uf origin main
+CREATE DATABASE apis_rdf_test_db;
+CREATE USER 'apis_rdf_test_user'@'localhost' IDENTIFIED BY 'apis_rdf_test_password';
+GRANT ALL PRIVILEGES ON apis_rdf_test_db.* TO 'apis_rdf_test_user'@'localhost';
+FLUSH PRIVILEGES;
 ```
 
-## Integrate with your tools
+### setup
 
-- [ ] [Set up project integrations](https://gitlab.com/acdh-oeaw/apis/apis-rdf-devops/-/settings/integrations)
+clone repo and recursively all its submodules, go into it:
 
-## Collaborate with your team
+```
+git clone --recurse-submodules git@gitlab.com:acdh-oeaw/apis/apis-rdf-devops.git
+cd apis-rdf-devops/
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+the ontology to be used must be symlinked into the repo root, for example like this:
+```
+rm apis_ontology # delete hard-wired placeholder
+ln -s apis-ontologies/jelinek/ apis_ontology
+```
 
-## Test and Deploy
+Append at the end of file `apis_ontology/settings/server_settings.py` your db credentials (WARNING: Take care to not commit them), 
+for example:
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'apis_rdf_test_db',
+        'USER': 'apis_rdf_test_user',
+        'PASSWORD': 'apis_rdf_test_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
 
-Use the built-in continuous integration in GitLab.
+From here onwards, there are two ways to set up the python environment:
+* with a docker dev container in VS Code
+* with a python virtual environment via `pipenv`  (and arbitrary IDE utilizing this environment)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### dev container in VS Code
 
-***
+TODO Matthias: fill in instruction
 
-# Editing this README
+### pipenv
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+At the repo's root, set up your environment, and activate it:
+```
+pipenv install
+pipenv shell
+```
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-## Name
-Choose a self-explaining name for your project.
+### django setup
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Either within your dev container or virtual python environment, run the `manage.py` at the project's root with the corresponding settings from the ontology module, like so:
+```
+python manage.py version --settings=apis_ontology.settings.server_settings
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+If a fresh DB was set up, then it needs to be migrated:
+```
+python manage.py migrate --settings=apis_ontology.settings.server_settings
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Start a django shell:
+```
+python manage.py shell --settings=apis_ontology.settings.server_settings
+```
+Create test admin user within shell:
+```
+from django.contrib.auth.models import User
+User.objects.create_superuser('test_admin', None, 'test_password')
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Within django shell, create the properties defined in the ontology (work-around for now as properties are instances instead of classes, due to a complicated trade-off):
+```
+from apis_ontology.models import construct_properties
+construct_properties()
+```
+You can verify the properties:
+```
+from apis_core.apis_relations.models import Property
+Property.objects.all() # shoud return a queryset
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Run server:
+```
+python manage.py runserver --settings=apis_ontology.settings.server_settings
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## ontology specific scripts
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Projects occasionally need some processing logic only within the project scope. In order to avoid cluttering the main code base, project specific scripts can be run, by placing them in a subfolder `ontology_specific_scripts` in the respective ontology folder. For example the jelinek project has a script under path `apis_ontology/ontology_specific_scripts/import_tei.py`, this can be run like so:
+```
+python manage.py run_ontology_script import_tei --settings=apis_ontology.settings.server_settings
+```

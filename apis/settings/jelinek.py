@@ -26,6 +26,8 @@ APIS_SKOSMOS = {
     "description": "Thesaurus of the APIS project. Used to type entities and relations.",
 }
 
+APIS_AUTOCOMPLETE_SETTINGS = "apis_ontology.settings.autocomplete_settings"
+
 ALLOWED_HOSTS = re.sub(
     r"https?://",
     "",
