@@ -50,8 +50,49 @@ From here onwards, there are two ways to set up the python environment:
 * with a python virtual environment via `pipenv`  (and arbitrary IDE utilizing this environment)
 
 ### dev container in VS Code
+For developing in vscode you can use the [Remote Container Plugin](https://code.visualstudio.com/docs/remote/containers).
+The plugin basically needs three settings files, all of which need to placed in a `.devcontainer` folder in the root directory:
+- a Dockerfile holding the definition of the container for the app
+- a `docker-compose.yml` file for orchestrating the app container in conjunction with the other containers needed (e.g. a database for local development)
+- and a `devcontainer.json` holding the settings for the devcontainer: that includes things like forwarded ports, post-create and post-start commands and environment variables
 
-TODO Matthias: fill in instruction
+If a `.devcontainer` folder with the needed files is checked in the repository and you have installed the remote container plugin in your vscode installation vscode will ask you on opening of the repository if you want to reopen it in the container. If you click on "reopen in container" vscode will pull the needed images and start the containers.
+Big advantage of using remote containers is that all developers have exactly the same setup and via docker containers you can achieve a real separation of environments (something that is not possible with virtual environments only).
+
+#### the docker-compose.yml in apis-rdf-devops
+The `docker-compose.yml` file in apis-rdf-devops includes a service called tunnel:
+
+```dockerfile
+  tunnel:
+    image: cagataygurturk/docker-ssh-tunnel:0.0.1
+    volumes:
+      - $HOME/.ssh:/root/ssh:ro
+    environment:
+      TUNNEL_HOST: apis-tunnel
+      REMOTE_HOST: helios.arz.oeaw.ac.at
+      LOCAL_PORT: 3308
+      REMOTE_PORT: 3306
+    network_mode: service:db
+```
+It uses a cofiguration stored in a file called `config` in the directory `$HOME/.ssh:/root/ssh:ro` (you need to change the path to wherever your config is stored). 
+The config file basically sets the options for the ssh tunnel:
+```
+Host apis-tunnel # You can use any name
+        HostName sisyphos.arz.oeaw.ac.at 
+        IdentityFile ~/.ssh/id_rsa
+        User apis
+        ForwardAgent yes
+        TCPKeepAlive yes
+        ConnectTimeout 5
+        ServerAliveCountMax 10
+        ServerAliveInterval 15
+```
+The tunnel host set in the above config needs to be the name set in the environment variables in the docker-compose service. Additionally you can set with environment variables in the docker-compose-service:
+- `REMOTE_HOST`: this is the remote host we tunnel to. In our case its `helios.arz.oeaw.ac.at` to make the remote (production) db accessible in the local container
+- `LOCAL_PORT`: the local port to use for the tunnel. As we are using the same network as the db service we cant use 3306 as that port is already used by the local db. We therefore use 3308
+
+With these settings in place you can access dbs on helios under host `db` and port `3308`. Therefore something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
+
 
 ### pipenv
 
