@@ -46,10 +46,10 @@ DATABASES = {
 ```
 
 From here onwards, there are two ways to set up the python environment:
-* with a docker dev container in VS Code
-* with a python virtual environment via `pipenv`  (and arbitrary IDE utilizing this environment)
+* **a.) with a docker dev container in VS Code**
+* **b.) with a python virtual environment via `pipenv`  (and arbitrary IDE utilizing this environment)**
 
-### dev container in VS Code
+## a.) dev container in VS Code
 For developing in vscode you can use the [Remote Container Plugin](https://code.visualstudio.com/docs/remote/containers).
 The plugin basically needs three settings files, all of which need to placed in a `.devcontainer` folder in the root directory:
 - a Dockerfile holding the definition of the container for the app
@@ -94,7 +94,7 @@ The tunnel host set in the above config needs to be the name set in the environm
 With these settings in place you can access dbs on helios under host `db` and port `3308`. Therefore something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
 
 
-### pipenv
+## b.) pipenv
 
 At the repo's root, set up your environment, and activate it:
 ```
@@ -102,8 +102,7 @@ pipenv install
 pipenv shell
 ```
 
-
-### django setup
+## django setup (after setup a. or b.)
 
 Either within your dev container or virtual python environment, run the `manage.py` at the project's root with the corresponding settings from the ontology module, like so:
 ```
