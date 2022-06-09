@@ -82,7 +82,8 @@ def user_login(request):
             if user and user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(request.GET.get("next", "/"))
-            return HttpResponse("user does not exist")
+            return HttpResponse(f"User '{cd['username']}' does not exist "
+                                f"or password is wrong.")
     else:
         form = form_user_login()
         return render(request, "webpage/user_login.html", {"form": form})
