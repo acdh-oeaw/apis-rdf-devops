@@ -124,16 +124,21 @@ from django.contrib.auth.models import User
 User.objects.create_superuser('test_admin', None, 'test_password')
 ```
 
-Within django shell, create the properties defined in the ontology (work-around for now as properties are instances instead of classes, due to a complicated trade-off):
+Relationships between entities, along with their labels, are defined in
+`construct_properties()` in an individual ontology's `models.py` file.
+To initially create them in the database and to update/replace them later on,
+the function has to be called explicitly.
+
+The following management command does this for you and, on success,
+prints out the relationship labels (or "properties") which were created:
+
+```shell
+$ python manage.py create_relationships --settings=apis_ontology.settings.server_settings
 ```
-from apis_ontology.models import construct_properties
-construct_properties()
-```
-You can verify the properties:
-```
-from apis_core.apis_relations.models import Property
-Property.objects.all() # shoud return a queryset
-```
+Note: the above workflow for handling relationships is a workaround
+since properties are currently not defined as separate classes but instances
+as a result of a complicated trade-off.
+
 
 Run server:
 ```
