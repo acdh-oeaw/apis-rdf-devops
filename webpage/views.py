@@ -85,7 +85,7 @@ def user_login(request):
                 if "logout" in redirect_page:
                     # prevent redirect loop on login attempt immediately following logout
                     redirect_page = "/"
-                return HttpResponseRedirect(request.GET.get("next", "/"))
+                return HttpResponseRedirect(redirect_page)
             return HttpResponse(f"User '{cd['username']}' does not exist "
                                 f"or password is wrong.")
     else:
