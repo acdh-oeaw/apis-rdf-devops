@@ -88,8 +88,8 @@
                                     <span class="caret"/>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% for ent in entities_list %}
-                                        <a class="dropdown-item" href="{% url 'apis:apis_entities:generic_entities_list' ent %}">{{ent|title}}</a>
+                                    {% for ent in entities_links %}
+                                        <a class="dropdown-item" href="{% url 'apis:apis_entities:generic_entities_list' ent.0 %}">{{ ent.1 }}</a>
                                     {% endfor %}
                                     <a class="dropdown-item" href="{% url 'apis:apis_metainfo:uri_browse' %}">URIs</a>
                                     <a class="dropdown-item" href="{% url 'webpage:staticpage' template='uri_resolver' %}">URI-Resolver</a>
