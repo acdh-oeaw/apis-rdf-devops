@@ -1,4 +1,22 @@
-.*.pyc
-.idea
-__pycache__
+# ----- project files
 staticfiles/
+
+# ----- OS, IDEs, tooling
+.DS_Store
+.idea/
+.python-version
+
+# ----- misc. files
+*~
+*.bak
+*.log
+*.sqlite
+*cache*
+*foo*
+*local*
+*temp*
+!*template*
+
+# ---- Python-specific
+.*.pyc
+__pycache__/

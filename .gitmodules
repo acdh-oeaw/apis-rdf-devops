@@ -1,9 +1,11 @@
 [submodule "apis_core_submodule"]
 	path = apis-core
 	url = ../apis-core.git
+	branch = apis_rdf
 [submodule "apis_ontologies_submodule"]
 	path = apis-ontologies
 	url = ../apis-ontologies.git
 [submodule "manuelle_korrektur_jelinek_submodule"]
+	update = none
 	path = manuelle-korrektur-jelinek
 	url = ../../jwv/manuelle-korrektur.git
