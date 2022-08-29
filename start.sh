@@ -1,10 +1,11 @@
 #!/bin/bash
-#useradd -M celery
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
+echo "Django instance for project: $APIS_RDF_ONTOLOGY"
+echo "Current dir: $(pwd)"
 ls -la
 pwd
-rm apis_ontology
+rm -f apis_ontology
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
 ls -la
 pwd
