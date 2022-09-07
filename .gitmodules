@@ -1,5 +1,5 @@
 [submodule "apis_core_submodule"]
-	path = apis-core-rdf
+	path = apis-core
 	url = ../apis-core-rdf.git
 	branch = main
 [submodule "apis_ontologies_submodule"]
