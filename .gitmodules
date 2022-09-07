@@ -1,4 +1,4 @@
-[submodule "apis_core_rdf_submodule"]
+[submodule "apis_core_submodule"]
 	path = apis-core-rdf
 	url = ../apis-core-rdf.git
 	branch = main
