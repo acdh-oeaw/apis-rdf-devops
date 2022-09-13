@@ -4,8 +4,8 @@
 {% load webpage_extras %}
 {% block content %}
 
-  <div class="jumbotron" style="min-height: 400px; padding:0; background-image: url('{{ PROJECT_TITLE_IMG }}')"
-       title="">
+  <div class="jumbotron p-0"
+       style="min-height: 400px; background-image: url('{{ PROJECT_TITLE_IMG }}')">
   </div>
   <div class="container">
   <div class="card card-index">
@@ -21,11 +21,13 @@
         {% projects_metadata 'description' %}
       </p>
       <div class="text-right">
-        <a href="/apis/entities/entity/person/list/" class="btn btn-lg btn-index pulse" class="pull-right">
-          <b><i class="fa fa-angle-right"></i></b>&nbsp;&nbsp;explore
+        <a href="/apis/entities/entity/person/list/"
+           class="btn btn-lg btn-index pulse pull-right">
+          explore
         </a>
       </div>
       <hr/>
     </div>
   </div>
 {% endblock %}
+</div>
