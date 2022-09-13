@@ -149,22 +149,33 @@
               <li class="nav-item dropdown ml-auto">
                 <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                    aria-expanded="false">
-                  {{ user.get_username }}
+                  User: {{ user.get_username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="nav-link" href="{% url 'webpage:user_logout' %}"><i class="feather-32"
-                                                                                data-feather="log-out"></i></a>
-                  <div class="form-check" style="padding-left: 20px">
-                    <input type="checkbox" class="form-check-input" id="check_edit_views"
-                           {% if  request.session.edit_views %}checked{% endif %}>
-                    <label class="form-check-label" for="ckeck_edit_views">Use edit views</label>
+                  <div class="dropdown-item">
+                    <a class="nav-link p-0" href="{% url 'webpage:user_logout' %}">
+                      <span class="feather-32" data-feather="log-out"></span>
+                      log out
+                    </a>
+                  </div>
+                  <div class="dropdown-item">
+                    <form class="form-inline">
+                      <div class="form-check">
+                        <input id="check_edit_views" type="checkbox"
+                               class="form-check-input"
+                               {% if request.session.edit_views %}checked{% endif %}>
+                        <label class="form-check-label" for="check_edit_views">
+                          Use edit views
+                        </label>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </li>
             {% else %}
-              <li class="nav-item dropdown my-2 my-lg-0">
-                <a class="nav-link" href="{% url 'webpage:user_login' %}?next={{ request.path|urlencode }}">
-                  <i class="feather-32" data-feather="log-in"></i>
+              <li class="nav-item dropdown ml-auto">
+                <a class="nav-link p-0" href="{% url 'webpage:user_login' %}?next={{ request.path|urlencode }}">
+                  <span class="feather-32" data-feather="log-in"></span>
                 </a>
               </li>
             {% endif %}
