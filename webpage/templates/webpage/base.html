@@ -5,205 +5,233 @@
 {% load infos_extras %}
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>{% block title %} {% projects_metadata 'title' %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% block metaDescription %}
-        <meta name="description" content="{{ metadata.description }}">
-        <meta name="author" content="{{ metadata.author }}">
-    {% endblock %}
-    <!-- favicons -->
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ SHARED_URL }}favicon/apple-touch-icon.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ SHARED_URL }}favicon/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ SHARED_URL }}favicon/favicon-16x16.png"/>
-        <link rel="manifest" href="{{ SHARED_URL }}favicon/manifest.json"/>
-        <link rel="mask-icon" href="{{ SHARED_URL }}favicon/safari-pinned-tab.svg" color="#00aba9"/>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css" />
-	<meta name="theme-color" content="#ffffff"/>
-    <!--favicons end -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    {% include "apis_entities/apis_templatetag.html" %}
-    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500" rel="stylesheet" />
-    <link rel="stylesheet" id="fundament-styles"  href="{{ SHARED_URL }}fundament/dist/fundament/css/fundament.min.css" type="text/css"/>
-    <!-- <link rel="stylesheet" href="{% static 'webpage/css/fundament_new.css' %}" rel="stylesheet"/> -->
-    <link rel="stylesheet" href="{{ PROJECT_CSS }}?rnd=1" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ SHARED_URL }}apis/libraries/scroll-to-top/css/ap-scroll-top.min.css" />
-    <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-    <script type="text/javascript">
-        window.cookieconsent_options = {
-            "message":"This website uses cookies to ensure you get the best experience on our website",
-            "dismiss":"Got it!",
-            "learnMore":"More info",
-            "link":"{% projects_metadata 'imprint' %}",
-            "theme":"dark-bottom"};
-    </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
-    <!-- End Cookie Consent plugin -->
-    <!-- Matomo -->
-      <script type="text/javascript">
-        var _paq = _paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-          var u="{% projects_metadata 'matomo_url' %}";
-          _paq.push(['setTrackerUrl', u+'piwik.php']);
-          _paq.push(['setSiteId', '{% projects_metadata "matomo_id" %}']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-      </script>
-    <!-- End Matomo Code -->
-    {% block scriptHeader %}
-    {% endblock %}
+  <meta charset="utf-8">
+  <title>{% block title %} {% projects_metadata 'title' %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block metaDescription %}
+    <meta name="description" content="{{ metadata.description }}">
+    <meta name="author" content="{{ metadata.author }}">
+  {% endblock %}
+  <!-- favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ SHARED_URL }}favicon/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ SHARED_URL }}favicon/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ SHARED_URL }}favicon/favicon-16x16.png"/>
+  <link rel="manifest" href="{{ SHARED_URL }}favicon/manifest.json"/>
+  <link rel="mask-icon" href="{{ SHARED_URL }}favicon/safari-pinned-tab.svg" color="#00aba9"/>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <!--favicons end -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  {% include "apis_entities/apis_templatetag.html" %}
+  <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:400,500" rel="stylesheet"/>
+  <link rel="stylesheet" id="fundament-styles" href="{{ SHARED_URL }}fundament/dist/fundament/css/fundament.min.css"
+        type="text/css"/>
+  <!-- <link rel="stylesheet" href="{% static 'webpage/css/fundament_new.css' %}" rel="stylesheet"/> -->
+  <link rel="stylesheet" href="{{ PROJECT_CSS }}?rnd=1" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ SHARED_URL }}apis/libraries/scroll-to-top/css/ap-scroll-top.min.css"/>
+  <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+  <script type="text/javascript">
+    window.cookieconsent_options = {
+      "message": "This website uses cookies to ensure you get the best experience on our website",
+      "dismiss": "Got it!",
+      "learnMore": "More info",
+      "link": "{% projects_metadata 'imprint' %}",
+      "theme": "dark-bottom"
+    };
+  </script>
+  <script type="text/javascript"
+          src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+  <!-- End Cookie Consent plugin -->
+  <!-- Matomo -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "{% projects_metadata 'matomo_url' %}";
+      _paq.push(['setTrackerUrl', u + 'piwik.php']);
+      _paq.push(['setSiteId', '{% projects_metadata "matomo_id" %}']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.defer = true;
+      g.src = u + 'piwik.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <!-- End Matomo Code -->
+  {% block scriptHeader %}
+  {% endblock %}
 </head>
 <body role="document" class="home contained fixed-nav" id="body">
-    <div class="hfeed site" id="page">
-        <div class="wrapper-fluid wrapper-navbar sticky-navbar" id="wrapper-navbar" itemscope="" itemtype="http://schema.org/WebSite">
-            <a class="skip-link screen-reader-text sr-only" href="#content">Skip to content</a>
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid">
-                    <!-- Your site title as branding in the menu -->
-                    <a href="/" class="navbar-brand custom-logo-link" rel="home" itemprop="url">
-                        <img src="{{ PROJECT_LOGO }}" class="img-fluid" alt="{% projects_metadata 'title' %}" itemprop="{% projects_metadata 'title' %}"/>
-                    </a><!-- end custom logo -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"/>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                        <!-- Your menu goes here -->
-                        <ul id="main-menu" class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About
-                                    <span class="caret"/>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'infos:about-the-project' %}">About the project</a>
-                                    <a class="dropdown-item" href="{% url 'infos:project-team' %}">Team</a>
-                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">Imprint | Impressum</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entities
-                                    <span class="caret"/>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% for ent in entities_links %}
-                                        <a class="dropdown-item" href="{% url 'apis:apis_entities:generic_entities_list' ent.0 %}">{{ ent.1 }}</a>
-                                    {% endfor %}
-                                    <a class="dropdown-item" href="{% url 'apis:apis_metainfo:uri_browse' %}">URIs</a>
-                                    <a class="dropdown-item" href="{% url 'webpage:staticpage' template='uri_resolver' %}">URI-Resolver</a>
-                                </div>
-                            </li>
-                            {% if "viecpro_vis" in APPS %}
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visualisations
-                                    <span class="caret"/>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'viecpro_vis:start_view' %}">Hierarchy</a>
-                                </div>
-                            </li>
-                            {% endif %}
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relations
-                                    <span class="caret"/>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% for ent in relations_list %}
-                                        <a class="dropdown-item" href="{% url 'apis:apis_relations:generic_relations_list' ent %}">{{ent|title}}</a>
-                                    {% endfor %}
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav justify-content-end">
-                            {% if user.is_authenticated %}
-                            <li class="nav-item dropdown ml-auto">
-                                <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    {{ user.get_username }}
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="nav-link" href="{% url 'webpage:user_logout' %}"><i class="feather-32" data-feather="log-out"></i></a>
-                              <div class="form-check" style="padding-left: 20px">
-                                <input type="checkbox" class="form-check-input" id="check_edit_views" {% if  request.session.edit_views %}checked{% endif %}>
-                                <label class="form-check-label" for="ckeck_edit_views">Use edit views</label>
-                              </div>
-                                </div>
-
-                            </li>
-                            {% else %}
-                            <li class="nav-item dropdown my-2 my-lg-0">
-                                <a class="nav-link" href="{% url 'webpage:user_login' %}?next={{ request.path|urlencode }}">
-                                <i class="feather-32" data-feather="log-in"></i>
-                                </a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    <!-- .collapse navbar-collapse -->
+<div class="hfeed site" id="page">
+  <div class="wrapper-fluid wrapper-navbar sticky-navbar" id="wrapper-navbar" itemscope=""
+       itemtype="http://schema.org/WebSite">
+    <a class="skip-link screen-reader-text sr-only" href="#content">Skip to content</a>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <!-- Your site title as branding in the menu -->
+        <a href="/" class="navbar-brand custom-logo-link" rel="home" itemprop="url">
+          <img src="{{ PROJECT_LOGO }}" class="img-fluid" alt="{% projects_metadata 'title' %}"
+               itemprop="{% projects_metadata 'title' %}"/>
+        </a><!-- end custom logo -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"/>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <!-- Your menu goes here -->
+          <ul id="main-menu" class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                 aria-expanded="false">About
+                <span class="caret"/>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'infos:about-the-project' %}">About the project</a>
+                <a class="dropdown-item" href="{% url 'infos:project-team' %}">Team</a>
+                <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">Imprint |
+                  Impressum</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                 aria-expanded="false">Entities
+                <span class="caret"/>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for ent in entities_links %}
+                  <a class="dropdown-item"
+                     href="{% url 'apis:apis_entities:generic_entities_list' ent.0 %}">{{ ent.1 }}</a>
+                {% endfor %}
+                <a class="dropdown-item" href="{% url 'apis:apis_metainfo:uri_browse' %}">URIs</a>
+                <a class="dropdown-item" href="{% url 'webpage:staticpage' template='uri_resolver' %}">URI-Resolver</a>
+              </div>
+            </li>
+            {% if "viecpro_vis" in APPS %}
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Visualisations
+                  <span class="caret"/>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'viecpro_vis:start_view' %}">Hierarchy</a>
                 </div>
-                <!-- .container -->
-            </nav>
-            <!-- .site-navigation -->
-        </div>
-        <div id="content">
-            {% if DEV_VERSION %}
-            <div class="alert alert-danger" role="alert">
-                This is a DEVELOPMENT instance. Click <a href="https://{{ PROJECT_NAME }}.acdh.oeaw.ac.at">here</a> for the Production version
-            </div>
+              </li>
             {% endif %}
-            {% block content %}{% endblock %}
-        </div>
-        <div class="wrapper fundament-default-footer" id="wrapper-footer-full">
-            <div class="container-fluid" id="footer-full-content" tabindex="-1">
-                <div class="footer-separator">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                    </svg> KONTAKT
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                 aria-expanded="false">Relations
+                <span class="caret"/>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for ent in relations_list %}
+                  <a class="dropdown-item"
+                     href="{% url 'apis:apis_relations:generic_relations_list' ent %}">{{ ent|title }}</a>
+                {% endfor %}
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav justify-content-end">
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown ml-auto">
+                <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">
+                  {{ user.get_username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="nav-link" href="{% url 'webpage:user_logout' %}"><i class="feather-32"
+                                                                                data-feather="log-out"></i></a>
+                  <div class="form-check" style="padding-left: 20px">
+                    <input type="checkbox" class="form-check-input" id="check_edit_views"
+                           {% if  request.session.edit_views %}checked{% endif %}>
+                    <label class="form-check-label" for="ckeck_edit_views">Use edit views</label>
+                  </div>
                 </div>
-                <div class="row justify-content-md-center" style="text-align:center">
-                    <div class="col">
-                        <a href="https://www.oeaw.ac.at/acdh/" target="_blank" rel="noopener" aria-label="ACDH">
-                            <img src="https://fundament.acdh.oeaw.ac.at/common-assets/images/acdh_logo.svg" alt="ACDH" title="Austrian Centre for Digital Humanities (ACDH) of the Austrian Academy of Sciences"/>
-                        </a>
-                        <br />
-                        Austrian Centre for Digital Humanities (ACDH) of the Austrian Academy of Sciences
-                    </div>
-                    {% project_insts as insts %}
-                    {% for x in insts %}
-                        <div class="col">
-                            <a href="{{ x.website }}" target="_blank" rel="noopener" aria-label="{{ x.abbr }}">
-                                <img src="{{ x.logo_url}}" alt="{{ x.abbr }}" title="{{ x.name }}">
-                            </a>
-                            <br />
-                            {{ x.name }}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="footer-imprint-bar" id="wrapper-footer-secondary" style="text-align:center; padding:0.4rem 0; font-size: 0.9rem;">
-        <a href="/imprint.html">Impressum/Imprint</a>
-        {% if user.is_authenticated %}
-            {% if DB_NAME %}
-                <div class="footer-imprint-bar">
-                    <small>{{ DB_NAME }}</small><br />
-                    <small><a href="{% url 'infos:projectinst_browse' %}">customize the project partners here</a></small>
-                </div>
+              </li>
+            {% else %}
+              <li class="nav-item dropdown my-2 my-lg-0">
+                <a class="nav-link" href="{% url 'webpage:user_login' %}?next={{ request.path|urlencode }}">
+                  <i class="feather-32" data-feather="log-in"></i>
+                </a>
+              </li>
             {% endif %}
-        {% endif %}
+          </ul>
+        </div>
+        <!-- .collapse navbar-collapse -->
+      </div>
+      <!-- .container -->
+    </nav>
+    <!-- .site-navigation -->
+  </div>
+  <div id="content">
+    {% if DEV_VERSION %}
+      <div class="alert alert-danger" role="alert">
+        This is a DEVELOPMENT instance. Click <a href="https://{{ PROJECT_NAME }}.acdh.oeaw.ac.at">here</a> for the
+        Production version
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+  <div class="wrapper fundament-default-footer" id="wrapper-footer-full">
+    <div class="container-fluid" id="footer-full-content" tabindex="-1">
+      <div class="footer-separator">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="feather feather-message-circle">
+          <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        KONTAKT
+      </div>
+      <div class="row justify-content-md-center" style="text-align:center">
+        <div class="col">
+          <a href="https://www.oeaw.ac.at/acdh/" target="_blank" rel="noopener" aria-label="ACDH">
+            <img src="https://fundament.acdh.oeaw.ac.at/common-assets/images/acdh_logo.svg" alt="ACDH"
+                 title="Austrian Centre for Digital Humanities (ACDH) of the Austrian Academy of Sciences"/>
+          </a>
+          <br/>
+          Austrian Centre for Digital Humanities (ACDH) of the Austrian Academy of Sciences
+        </div>
+        {% project_insts as insts %}
+        {% for x in insts %}
+          <div class="col">
+            <a href="{{ x.website }}" target="_blank" rel="noopener" aria-label="{{ x.abbr }}">
+              <img src="{{ x.logo_url }}" alt="{{ x.abbr }}" title="{{ x.name }}">
+            </a>
+            <br/>
+            {{ x.name }}
+          </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
+</div>
 
-    {% block scripts %}
-        <script src="{{ SHARED_URL }}fundament/dist/fundament/js/fundament.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-        <script src="{{ SHARED_URL }}apis/libraries/scroll-to-top/js/ap-scroll-top.min.js"></script>
-    {% endblock %}
+<div class="footer-imprint-bar" id="wrapper-footer-secondary"
+     style="text-align:center; padding:0.4rem 0; font-size: 0.9rem;">
+  <a href="/imprint.html">Impressum/Imprint</a>
+  {% if user.is_authenticated %}
+    {% if DB_NAME %}
+      <div class="footer-imprint-bar">
+        <small>{{ DB_NAME }}</small><br/>
+        <small><a href="{% url 'infos:projectinst_browse' %}">customize the project partners here</a></small>
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
 
-    {% block scripts2 %}
-    {% endblock scripts2 %}
+{% block scripts %}
+  <script src="{{ SHARED_URL }}fundament/dist/fundament/js/fundament.min.js"></script>
+  <script type="text/javascript"
+          src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <script src="{{ SHARED_URL }}apis/libraries/scroll-to-top/js/ap-scroll-top.min.js"></script>
+{% endblock %}
 
-    </body>
+{% block scripts2 %}
+{% endblock scripts2 %}
+
+</body>
 </html>
