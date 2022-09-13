@@ -224,20 +224,21 @@
       </div>
     </div>
   </div>
-  <!-- End site footer -->
-</div>
-
-<div class="footer-imprint-bar" id="wrapper-footer-secondary"
-     style="text-align:center; padding:0.4rem 0; font-size: 0.9rem;">
-  <a href="/imprint.html">Impressum/Imprint</a>
-  {% if user.is_authenticated %}
-    {% if DB_NAME %}
-      <div class="footer-imprint-bar">
-        <small>{{ DB_NAME }}</small><br/>
-        <small><a href="{% url 'infos:projectinst_browse' %}">customize the project partners here</a></small>
-      </div>
+  <!-- Start imprint, project partners -->
+  <div class="footer-imprint-bar" id="wrapper-footer-secondary"
+       style="text-align:center; padding:0.4rem 0; font-size: 0.9rem;">
+    <a href="/imprint.html">Impressum/Imprint</a>
+    {% if user.is_authenticated %}
+      {% if DB_NAME %}
+        <div class="footer-imprint-bar">
+          <small>{{ DB_NAME }}</small><br/>
+          <small><a href="{% url 'infos:projectinst_browse' %}">customize the project partners here</a></small>
+        </div>
+      {% endif %}
     {% endif %}
-  {% endif %}
+  </div>
+  <!-- End imprint, project partners -->
+  <!-- End site footer -->
 </div>
 
 {% block scripts %}
