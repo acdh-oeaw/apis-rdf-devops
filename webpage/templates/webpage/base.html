@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %} {% projects_metadata 'title' %}{% endblock %}</title>
+  <title>{% block title %} {% projects_metadata 'title' %} {% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% block metaDescription %}
     <meta name="description" content="{{ metadata.description }}">
@@ -66,7 +66,8 @@
   {% block scriptHeader %}
   {% endblock %}
 </head>
-<body role="document" class="home contained fixed-nav" id="body">
+
+<body role="document" class="home contained fixed-nav" id="body" style="height: unset!important;">
 <div class="hfeed site" id="page">
   <div class="wrapper-fluid wrapper-navbar sticky-navbar" id="wrapper-navbar" itemscope=""
        itemtype="http://schema.org/WebSite">
@@ -98,13 +99,14 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'infos:about-the-project' %}">About the project</a>
                 <a class="dropdown-item" href="{% url 'infos:project-team' %}">Team</a>
-                <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">Imprint |
-                  Impressum</a>
+                <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">
+                  Imprint | Impressum</a>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                 aria-expanded="false">Entities
+                 aria-expanded="false">
+                Entities
                 <span class="caret"/>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -158,7 +160,6 @@
                     <label class="form-check-label" for="ckeck_edit_views">Use edit views</label>
                   </div>
                 </div>
-
               </li>
             {% else %}
               <li class="nav-item dropdown my-2 my-lg-0">
@@ -227,12 +228,12 @@
   <!-- Start imprint, project partners -->
   <div class="footer-imprint-bar" id="wrapper-footer-secondary"
        style="text-align:center; padding:0.4rem 0; font-size: 0.9rem;">
-    <a href="/imprint.html">Impressum/Imprint</a>
+    <a href="/imprint.html">Imprint | Impressum</a>
     {% if user.is_authenticated %}
       {% if DB_NAME %}
         <div class="footer-imprint-bar">
-          <small>{{ DB_NAME }}</small><br/>
-          <small><a href="{% url 'infos:projectinst_browse' %}">customize the project partners here</a></small>
+          <div>{{ DB_NAME }}</div>
+          <div><a href="{% url 'infos:projectinst_browse' %}">Customize project partners</a></div>
         </div>
       {% endif %}
     {% endif %}
