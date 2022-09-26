@@ -9,3 +9,6 @@ A clear and concise description of any alternative solutions or features you've 
 
 ## Additional context
 Add any other context or screenshots/illustrations supporting the feature request here.
+
+<!-- Do not remove the content below this line -->
+/label ~feature-request ~triage

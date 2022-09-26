@@ -9,3 +9,6 @@ Your question in clear and concise words.
 
 ## Additional context
 Add any other context which may help understand your question better, e.g. why it occurred to you, what compelled you to ask it etc.
+
+<!-- Do not remove the content below this line -->
+/label ~question ~triage

@@ -28,3 +28,6 @@ Add screenshots where visuals may help better explain the problem.
 
 ## Additional context
 Add any other context about the problem here.
+
+<!-- Do not remove the content below this line -->
+/label ~bug ~triage
