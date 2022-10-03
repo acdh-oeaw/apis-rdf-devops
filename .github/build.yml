@@ -1,0 +1,99 @@
+name: Build Image
+
+
+on:
+  push:
+    branches: [main]
+
+# on:
+#   workflow_run:
+#     workflows: ["Django Tests CI"]
+#     types:
+#       - completed
+
+jobs:
+  setup_workflow_env:
+    runs-on: ubuntu-latest
+    environment: production
+    outputs:
+# It seems you have to specify the environment twice (passed to reusable workflow)
+# as there is no way yet to get the active environment
+      environment: production
+      image_tagged: apis-nomansland
+      registry_root: ghcr.io/acdh-oeaw/
+      default_port: "5000"
+      APP_NAME: nomansland
+# This together with the branch name is also used as the namespace to deploy to
+      APP_ROOT: "/"
+      SERVICE_ID: "18582"
+      PUBLIC_URL: https://nomansland.acdh-dev.oeaw.ac.at
+      POSTGRES_ENABLED: "false"
+    steps:
+      - run: "/bin/true"      
+  build_and_push_to_registry:
+    runs-on: ubuntu-latest
+    needs: [setup_workflow_env]
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
+          #ghcr.io/acdh-oeaw/InTaVia-Backend
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value={{sha}},enable={{is_default_branch}}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - 
+        name: Create build environment
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+        run: |
+          echo -n "$SECRETS_CONTEXT" | jq -r '[to_entries[]|select(.key|startswith("K8S_SECRET_"))]|map("\(.key|sub("K8S_SECRET_"; ""))=\(.value|tostring|@sh)")|.[]' > secrets.env
+      -        
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          secret-files: |
+            "secrets_env=./secrets.env"
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  _3:
+      needs: [setup_workflow_env, build_and_push_to_registry]
+      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
+      secrets: inherit
+      with:
+        DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
+        APP_NAME: ${{ needs.setup_workflow_env.outputs.APP_NAME }}
+        APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
+        SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
+        PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
+        POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
+        environment: "${{ needs.setup_workflow_env.outputs.environment}}"
+        default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
