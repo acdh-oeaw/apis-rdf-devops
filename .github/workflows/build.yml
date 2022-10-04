@@ -91,7 +91,7 @@ jobs:
       environment: Tibschol Development
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
-          APP_NAME: ${{ secrets.APP_NAME }}
+        APP_NAME: ${{ secrets.APP_NAME }}
         APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
         SERVICE_ID: ${{ secrets.SERVICE_ID }}
         PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
