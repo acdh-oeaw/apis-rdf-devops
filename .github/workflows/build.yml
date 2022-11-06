@@ -105,7 +105,7 @@ jobs:
       secrets: inherit
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
-        APP_NAME: tibschol-github-dev
+        APP_NAME: tibschol-dev
         APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
         SERVICE_ID: "19935"
         PUBLIC_URL: "https://tibschol.acdh-dev.oeaw.ac.at"
@@ -119,7 +119,7 @@ jobs:
       secrets: inherit
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
-        APP_NAME: sicprod-github-dev
+        APP_NAME: sicprod-dev
         APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
         SERVICE_ID: "20870"
         PUBLIC_URL: "https://sicprod.acdh-dev.oeaw.ac.at"
