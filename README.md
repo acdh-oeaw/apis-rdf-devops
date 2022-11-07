@@ -26,7 +26,7 @@ To get Git to link the superproject and its submodules together correctly, it is
 To clone the superproject along with its default submodules, run:
 
 ```sh
-$ git clone --recurse-submodules git@github.com:acdh-oeaw/apis/apis-rdf-devops.git
+$ git clone --recurse-submodules git@github.com:acdh-oeaw/apis-rdf-devops.git
 ```
 
 In case you originally cloned the superproject as simple, standalone repository without submodules, you can still collect them later on. From the project's root, run the following command to have Git clone them:
