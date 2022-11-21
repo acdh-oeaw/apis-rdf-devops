@@ -21,6 +21,7 @@ apis-bibsonomy = "~0.3"
 apis-highlighter = "~0.9"
 viecpro-vis = "^0.1.10"
 apis-core = "~0.17"
+pyzotero = "^1.5.5"
 
 [tool.poetry.dev-dependencies]
 django-extensions = "^3.1.0"
