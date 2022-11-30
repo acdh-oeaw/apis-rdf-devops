@@ -1,5 +1,6 @@
 # ----- project files
 staticfiles/
+apis_ontology
 
 # ----- OS, IDEs, tooling
 .DS_Store

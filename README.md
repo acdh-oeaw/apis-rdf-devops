@@ -49,22 +49,19 @@ $ git submodule update
 
 ### Symlink relevant APIS Ontologies files
 
-Django expects an app/directory named `apis_ontology` to be present in the project root. `apis_ontology` is effectively a symbolic link to a directory within the [apis-ontologies](../apis-ontologies) repository (= one of this superproject's submodules) which contains all files relevant to one particular APIS Ontologies project/app.
+Django expects an app/directory named `apis_ontology` to be present in the project root. In the case of this project, however, `apis_ontology` is a symbolic link to a subdirectory within the [apis-ontologies](https://github.com/acdh-oeaw/apis-ontologies) submodule where all files relevant to one particular APIS Ontologies app are saved.
 
-For CI/CD reasons, the `apis_ontology` symlink is already set and being tracked by Git. For local development, you have to change it to point to the directory containing the files relevant to the ontology you work on. If this directory does not exist yet, you will first have to create it, see [Create a new APIS Ontologies application](https://gitlab.com/acdh-oeaw/apis/apis-ontologies#create-a-new-apis-ontologies-application) in the APIS Ontologies README.
+When deploying to a live server or when developing locally with Docker, an environment variable `$APIS_RDF_ONTOLOGY` needs to be present for automatic creation of the symlink. Its value is expected to be the name of the project directory within **apis-ontologies** to which the symlink should point.
 
-Note that you are not supposed to (re)commit the modified symlink. If you do so accidentally, it won't do any real damage but will overwrite other devs' local symlinks when they pull changes.
-
-To link to e.g. the `jelinek` ontology, you would enter  do the use:
-
+For local development without Docker, the symlink needs to be created manually in the apis-rdf-devops root directory:
 
 ```sh
-$ cd apis-rdf-devops/
-$ rm apis_ontology # delete hard-wired placeholder
-$ ln -s apis-ontologies/jelinek/ apis_ontology
+$ ln -s apis-ontologies/YOUR_PROJECT_DIR apis_ontology
 ```
 
-For how to set up the file for your local database credentials, refer to the [Configure local settings](https://gitlab.com/acdh-oeaw/apis/apis-ontologies#configure-local-settings) section in in the APIS Ontologies README.
+In case the project directory does not exist yet, you will first have to create it, see [Create a new APIS Ontologies application](https://github.com/acdh-oeaw/apis-ontologies#create-a-new-apis-ontologies-application) in the APIS Ontologies README.
+
+For how to set up the file for your local database credentials, refer to the [Configure local settings](https://github.com/acdh-oeaw/apis-ontologies#configure-local-settings) section in in the APIS Ontologies README.
 
 Example credentials could look like the following:
 
