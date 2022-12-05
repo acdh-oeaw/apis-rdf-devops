@@ -5,7 +5,11 @@ import sys
 
 if __name__ == "__main__":
     if os.getenv("DJANGO_SETTINGS_MODULE") is None:
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apis.settings.base")
+        # check for local_settings.py for APIS Ontologies apps
+        if os.path.isdir("apis_ontology") and os.path.isfile("apis_ontology/settings/local_settings.py"):
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apis_ontology.settings.local_settings")
+        else:
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "apis.settings.base")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
