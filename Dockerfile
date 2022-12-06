@@ -17,7 +17,7 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python
     ln -s /opt/poetry/bin/poetry && \
     poetry config virtualenvs.create false
 
-# 
+# Copy files for dependency management with Poetry
 COPY ./pyproject.toml ./poetry.lock* /app/
 
 # Use variable $POETRY_INSTALL_WITH to install dependencies from
@@ -34,10 +34,8 @@ RUN chown -R app:app $HOME
 RUN chown -R app /app
 RUN chown -R app /usr/local
 
-# change to the app user
-# Switch to a non-root user, which is recommended by Heroku.
+# Switch to non-root user as recommended by Heroku
 USER app
 
-# 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 CMD ["bash", "start.sh"]
