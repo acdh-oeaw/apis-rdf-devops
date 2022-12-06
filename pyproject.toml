@@ -7,7 +7,7 @@ license = "MIT"
 
 
 [tool.poetry.dependencies]  # main project dependencies
-python = "~3.8"
+python = "~3.8.1"
 acdh-django-charts = "^0.5.3"
 apis-bibsonomy = "~0.3"
 apis-core = "~0.17"
