@@ -5,6 +5,7 @@
 [submodule "apis_ontologies_submodule"]
 	path = apis-ontologies
 	url = ../apis-ontologies.git
+	branch = main
 [submodule "manuelle_korrektur_jelinek_submodule"]
 	update = none
 	path = manuelle-korrektur-jelinek
