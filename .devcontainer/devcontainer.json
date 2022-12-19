@@ -5,9 +5,8 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspace",
-
 	// Set *default* container specific settings.json values on container create.
-	"settings": { 
+	"settings": {
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.languageServer": "Pylance",
 		"python.linting.enabled": true,
@@ -22,23 +21,22 @@
 		"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
 		"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 	},
-
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"ms-python.python",
 		"ms-python.vscode-pylance"
 	],
 	"remoteEnv": {
-		"APIS_RDF_ONTOLOGY": "jelinek",
+		"APIS_RDF_ONTOLOGY": "jelinek", //set the ontology you are actually using here
 		"DATABASE_URL": "mysql://root:mariadb@db:3306/apisdb",
-		"DJANGO_SETTINGS_MODULE": "apis.settings.tibschol"
+		"DJANGO_SETTINGS_MODULE": "apis_ontology.settings.server_settings", //make sure this is the correct settings module
+		"DEVELOP": "true" //setting to override the start of the gunicorn server (used in production)
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "poetry config virtualenvs.create false && poetry lock && poetry install && bash local_start.sh",
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"forwardPorts": [
+		3306, //mariadb
+		8000 //port for the dev server
+	],
+	"postCreateCommand": "poetry install --with dev && bash start.sh",
+	"remoteUser": "app"
 }
