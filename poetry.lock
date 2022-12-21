@@ -114,7 +114,7 @@ unicodecsv = "^0.14.1"
 
 [package.source]
 type = "directory"
-url = "../app/apis-core"
+url = "apis-core"
 
 [[package]]
 name = "apis-highlighter"
