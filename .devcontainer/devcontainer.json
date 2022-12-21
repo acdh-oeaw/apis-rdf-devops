@@ -37,6 +37,6 @@
 		3306, //mariadb
 		8000 //port for the dev server
 	],
-	"postCreateCommand": "poetry install --with dev && bash start.sh",
+	"postCreateCommand": "poetry config virtualenvs.create false && poetry lock && poetry install --with dev && bash start.sh",
 	"remoteUser": "app"
 }
