@@ -61,22 +61,6 @@ $ ln -s apis-ontologies/YOUR_PROJECT_DIR apis_ontology
 
 In case the project directory does not exist yet, you will first have to create it, see [Create a new APIS Ontologies application](https://github.com/acdh-oeaw/apis-ontologies#create-a-new-apis-ontologies-application) in the APIS Ontologies README.
 
-For how to set up the file for your local database credentials, refer to the [Configure local settings](https://github.com/acdh-oeaw/apis-ontologies#configure-local-settings) section in in the APIS Ontologies README.
-
-Example credentials could look like the following:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apis_rdf_test_db',
-        'USER': 'apis_rdf_test_user',
-        'PASSWORD': 'apis_rdf_test_password',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-```
 
 ### Configure Python environment
 
@@ -149,9 +133,11 @@ $ pipenv shell
 
 ### Django setup
 
-Once you have configured your Python environment using either solution outlined above, you need to set up Django.
+Once you have set up your Python environment using either solution outlined above, get your Django application ready for use.
 
-Within either your VS Code dev container or your Python Virtual Environment, run `manage.py` at the project's root using your local settings file, like so:
+First, make sure all settings needed for local development are in place, see [Configure local settings](https://github.com/acdh-oeaw/apis-ontologies#configure-local-settings) in the apis-ontologies README.
+
+Next, within either your VS Code dev container or your Python Virtual Environment, run `manage.py` at the project root using your local settings file, like so:
 
 ```sh
 $ python manage.py version --settings=apis_ontology.settings.local_settings
