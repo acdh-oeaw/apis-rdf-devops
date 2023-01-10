@@ -4,14 +4,14 @@ Note this project is generally functional but still experimental.
 
 ## Prerequisite for local setup
 
-You need to have a local MySQL server installed, ideally version 5.7, since this is what production uses. A persistence image might be integrated here in the future.
+You need to have a database ready for local development. Ideally, you install and use MySQL server version 5.7, since this is what production uses. (A persistence image might be integrated here in the future.)
 
-Create a database and a user for your project, e.g.:
+To create a new MySQL database and user for your project, provide your own values for `database_name`, `user_name` and `user_password` with the following queries (and note them down for later use):
 
 ```mysql
-CREATE DATABASE apis_rdf_test_db;
-CREATE USER 'apis_rdf_test_user'@'localhost' IDENTIFIED BY 'apis_rdf_test_password';
-GRANT ALL PRIVILEGES ON apis_rdf_test_db.* TO 'apis_rdf_test_user'@'localhost';
+CREATE DATABASE database_name;
+CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'user_password';
+GRANT ALL PRIVILEGES ON database_name.* TO 'user_name'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
