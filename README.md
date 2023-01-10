@@ -2,7 +2,7 @@
 
 Note this project is generally functional but still experimental.
 
-## Prerequisite for local setup
+## Prerequisite for local development
 
 You need to have a database ready for local development. Ideally, you install and use MySQL server version 5.7, since this is what production uses. (A persistence image might be integrated here in the future.)
 
@@ -15,13 +15,13 @@ GRANT ALL PRIVILEGES ON database_name.* TO 'user_name'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-## Setup
+## Setup of project
 
 ### Clone main repository and submodules
 
-This Django project expects other apps it depends on or integrates to be present in the form of Git submodules. These are defined in the `.gitmodules` file in the root of the repository, which facilitates installation of both this superproject and its submodules simultaneously.
+This Django project expects other apps to be present in the form of Git submodules. These are defined in the `.gitmodules` file in the root of this repository. This file facilitates simultaneous installation of both this superproject and its submodules.
 
-To get Git to link the superproject and its submodules together correctly, it is advisable not to deviate from the installation steps outlined below. Even if you previously separately cloned any of the repositories which function as submodules, it is best not to try to manually link them with this repository.
+To get Git to link the superproject and its submodules together correctly, it is advisable not to deviate from the installation steps outlined below. Even if you previously cloned any of the submodule repositories separately, it is best not to try to link them manually.
 
 To clone the superproject along with its default submodules, run:
 
@@ -29,7 +29,7 @@ To clone the superproject along with its default submodules, run:
 $ git clone --recurse-submodules git@github.com:acdh-oeaw/apis-rdf-devops.git
 ```
 
-In case you originally cloned the superproject as simple, standalone repository without submodules, you can still collect them later on. From the project's root, run the following command to have Git clone them:
+If you originally cloned the superproject as a standalone repository *without* submodules, you can still collect them later on. Use the following command at the project's root to do so:
 
 ```sh
 $ git submodule update --init --recursive
@@ -155,7 +155,7 @@ Next, start a Django shell...
 $ python manage.py shell --settings=apis_ontology.settings.local_settings
 ```
 
-and create an admin user (make up your own credentials):
+... and create an admin user (make up your own credentials):
 
 ```python
 from django.contrib.auth.models import User
