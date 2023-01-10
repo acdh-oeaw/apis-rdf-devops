@@ -2,26 +2,26 @@
 
 Note this project is generally functional but still experimental.
 
-## Prerequisite for local setup
+## Prerequisite for local development
 
-You need to have a local MySQL server installed, ideally version 5.7, since this is what production uses. A persistence image might be integrated here in the future.
+You need to have a database ready for local development. Ideally, you install and use MySQL server version 5.7, since this is what production uses. (A persistence image might be integrated here in the future.)
 
-Create a database and a user for your project, e.g.:
+To create a new MySQL database and user for your project, provide your own values for `database_name`, `user_name` and `user_password` with the following queries (and note them down for later use):
 
 ```mysql
-CREATE DATABASE apis_rdf_test_db;
-CREATE USER 'apis_rdf_test_user'@'localhost' IDENTIFIED BY 'apis_rdf_test_password';
-GRANT ALL PRIVILEGES ON apis_rdf_test_db.* TO 'apis_rdf_test_user'@'localhost';
+CREATE DATABASE database_name;
+CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'user_password';
+GRANT ALL PRIVILEGES ON database_name.* TO 'user_name'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-## Setup
+## Setup of project
 
 ### Clone main repository and submodules
 
-This Django project expects other apps it depends on or integrates to be present in the form of Git submodules. These are defined in the `.gitmodules` file in the root of the repository, which facilitates installation of both this superproject and its submodules simultaneously.
+This Django project expects other apps to be present in the form of Git submodules. These are defined in the `.gitmodules` file in the root of this repository. This file facilitates simultaneous installation of both this superproject and its submodules.
 
-To get Git to link the superproject and its submodules together correctly, it is advisable not to deviate from the installation steps outlined below. Even if you previously separately cloned any of the repositories which function as submodules, it is best not to try to manually link them with this repository.
+To get Git to link the superproject and its submodules together correctly, it is advisable not to deviate from the installation steps outlined below. Even if you previously cloned any of the submodule repositories separately, it is best not to try to link them manually.
 
 To clone the superproject along with its default submodules, run:
 
@@ -29,7 +29,7 @@ To clone the superproject along with its default submodules, run:
 $ git clone --recurse-submodules git@github.com:acdh-oeaw/apis-rdf-devops.git
 ```
 
-In case you originally cloned the superproject as simple, standalone repository without submodules, you can still collect them later on. From the project's root, run the following command to have Git clone them:
+If you originally cloned the superproject as a standalone repository *without* submodules, you can still collect them later on. Use the following command at the project's root to do so:
 
 ```sh
 $ git submodule update --init --recursive
@@ -61,22 +61,6 @@ $ ln -s apis-ontologies/YOUR_PROJECT_DIR apis_ontology
 
 In case the project directory does not exist yet, you will first have to create it, see [Create a new APIS Ontologies application](https://github.com/acdh-oeaw/apis-ontologies#create-a-new-apis-ontologies-application) in the APIS Ontologies README.
 
-For how to set up the file for your local database credentials, refer to the [Configure local settings](https://github.com/acdh-oeaw/apis-ontologies#configure-local-settings) section in in the APIS Ontologies README.
-
-Example credentials could look like the following:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apis_rdf_test_db',
-        'USER': 'apis_rdf_test_user',
-        'PASSWORD': 'apis_rdf_test_password',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-```
 
 ### Configure Python environment
 
@@ -94,9 +78,9 @@ For developing in VS Code you can use the [Remote Container Plugin](https://code
 
 - a Dockerfile holding the definition of the container for the app
 - a `docker-compose.yml` file for orchestrating the app container in conjunction with the other containers needed (e.g. a database for local development)
-- and a `devcontainer.json` holding settings relevant to the devcontainer itself, e.g. forwarded ports, post-create and post-start commands and environment variables
+- and a `devcontainer.json` holding settings relevant to the dev container itself, e.g. forwarded ports, post-create and post-start commands and environment variables
 
-If a `.devcontainer` folder with the needed files is checked in the repository and you have installed the remote container plugin in your VS Code installation, on opening of the repository, VS Code will ask you if you want to reopen it in the container. If you click on "reopen in container", the IDE will pull the needed images and start the containers.
+If a `.devcontainer` folder with the needed files is checked in the repository, and you have installed the remote container plugin in your VS Code installation, on opening of the repository, VS Code will ask you if you want to reopen it in the container. If you click on "reopen in container", the IDE will pull the needed images and start the containers.
 
 
 ##### Configure docker-compose.yml
@@ -135,7 +119,7 @@ The tunnel host set in the above config needs to be the name set in the environm
 - `REMOTE_HOST` is the remote host we tunnel to. In our case, `helios.arz.oeaw.ac.at` to make the remote (production) database accessible within the local container
 - `LOCAL_PORT` is the local port to use for the tunnel. As we are using the same network as the database service, we cannot use 3306 since that port is already used by the local database. We therefore use 3308.
 
-With these settings in place, you can access databases on helios under host `db` and port `3308`. Therefore something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
+With these settings in place, you can access databases on helios under host `db` and port `3308`. Therefore, something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
 
 
 #### Python Virtual Environment via pipenv
@@ -149,9 +133,11 @@ $ pipenv shell
 
 ### Django setup
 
-Once you have configured your Python environment using either solution outlined above, you need to set up Django.
+Once you have set up your Python environment using either solution outlined above, get your Django application ready for use.
 
-Within either your VS Code dev container or your Python Virtual Environment, run `manage.py` at the project's root using your local settings file, like so:
+First, make sure all settings needed for local development are in place, see [Configure local settings](https://github.com/acdh-oeaw/apis-ontologies#configure-local-settings) in the apis-ontologies README.
+
+Next, within either your VS Code dev container or your Python Virtual Environment, run `manage.py` at the project root using your local settings file, like so:
 
 ```sh
 $ python manage.py version --settings=apis_ontology.settings.local_settings
@@ -169,11 +155,11 @@ Next, start a Django shell...
 $ python manage.py shell --settings=apis_ontology.settings.local_settings
 ```
 
-and create an admin user (make up your own credentials):
+... and create an admin user (make up your own credentials):
 
 ```python
 from django.contrib.auth.models import User
-User.objects.create_superuser('test_admin', None, 'test_password')
+User.objects.create_superuser('admin_user_name', None, 'admin_user_password')
 ```
 
 Relationships between entities, along with their labels, are defined in
@@ -201,7 +187,7 @@ $ python manage.py runserver --settings=apis_ontology.settings.local_settings
 
 ### Ontology-specific scripts
 
-Projects occasionally need some processing logic only within their project scope. In order to avoid cluttering the main code base, project-specific scripts can be put into a sub directory `ontology_specific_scripts` within an individual ontology app.
+Projects occasionally need some processing logic only within their project scope. In order to avoid cluttering the main code base, project-specific scripts can be put into a subdirectory `ontology_specific_scripts` within an individual ontology app.
 
 The Jelinek project, for example, contains a script `import_tei.py` – full path using symlink: `apis_ontology/ontology_specific_scripts/import_tei.py` – which can be run like so:
 
