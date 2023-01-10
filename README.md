@@ -78,9 +78,9 @@ For developing in VS Code you can use the [Remote Container Plugin](https://code
 
 - a Dockerfile holding the definition of the container for the app
 - a `docker-compose.yml` file for orchestrating the app container in conjunction with the other containers needed (e.g. a database for local development)
-- and a `devcontainer.json` holding settings relevant to the devcontainer itself, e.g. forwarded ports, post-create and post-start commands and environment variables
+- and a `devcontainer.json` holding settings relevant to the dev container itself, e.g. forwarded ports, post-create and post-start commands and environment variables
 
-If a `.devcontainer` folder with the needed files is checked in the repository and you have installed the remote container plugin in your VS Code installation, on opening of the repository, VS Code will ask you if you want to reopen it in the container. If you click on "reopen in container", the IDE will pull the needed images and start the containers.
+If a `.devcontainer` folder with the needed files is checked in the repository, and you have installed the remote container plugin in your VS Code installation, on opening of the repository, VS Code will ask you if you want to reopen it in the container. If you click on "reopen in container", the IDE will pull the needed images and start the containers.
 
 
 ##### Configure docker-compose.yml
@@ -119,7 +119,7 @@ The tunnel host set in the above config needs to be the name set in the environm
 - `REMOTE_HOST` is the remote host we tunnel to. In our case, `helios.arz.oeaw.ac.at` to make the remote (production) database accessible within the local container
 - `LOCAL_PORT` is the local port to use for the tunnel. As we are using the same network as the database service, we cannot use 3306 since that port is already used by the local database. We therefore use 3308.
 
-With these settings in place, you can access databases on helios under host `db` and port `3308`. Therefore something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
+With these settings in place, you can access databases on helios under host `db` and port `3308`. Therefore, something like `mysql://jelinek:PASSWORD@db:3308/jelinek` should work.
 
 
 #### Python Virtual Environment via pipenv
@@ -187,7 +187,7 @@ $ python manage.py runserver --settings=apis_ontology.settings.local_settings
 
 ### Ontology-specific scripts
 
-Projects occasionally need some processing logic only within their project scope. In order to avoid cluttering the main code base, project-specific scripts can be put into a sub directory `ontology_specific_scripts` within an individual ontology app.
+Projects occasionally need some processing logic only within their project scope. In order to avoid cluttering the main code base, project-specific scripts can be put into a subdirectory `ontology_specific_scripts` within an individual ontology app.
 
 The Jelinek project, for example, contains a script `import_tei.py` – full path using symlink: `apis_ontology/ontology_specific_scripts/import_tei.py` – which can be run like so:
 
