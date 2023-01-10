@@ -159,7 +159,7 @@ and create an admin user (make up your own credentials):
 
 ```python
 from django.contrib.auth.models import User
-User.objects.create_superuser('test_admin', None, 'test_password')
+User.objects.create_superuser('admin_user_name', None, 'admin_user_password')
 ```
 
 Relationships between entities, along with their labels, are defined in
