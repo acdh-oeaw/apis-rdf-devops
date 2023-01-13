@@ -87,7 +87,7 @@ jobs:
   
   deploy_jelinek:
       needs: [setup_workflow_env, build_and_push_to_registry]
-      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
+      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy-cluster-2.yml@main
       secrets: inherit
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
@@ -101,7 +101,7 @@ jobs:
 
   deploy_tibschol:
       needs: [setup_workflow_env, build_and_push_to_registry]
-      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
+      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy-cluster-2.yml@main
       secrets: inherit
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
@@ -115,7 +115,7 @@ jobs:
 
   deploy_sicprod:
       needs: [setup_workflow_env, build_and_push_to_registry]
-      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
+      uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy-cluster-2.yml@main
       secrets: inherit
       with:
         DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}/${{ github.ref_name }}
