@@ -17,11 +17,11 @@ django-allow-cidr = "^0.3.1"
 mysqlclient = "^2.0.3"
 django-extensions = "^3.1.3"
 django-csp = "^3.7"
-apis-bibsonomy = "~0.3"
 apis-highlighter = "~0.9"
 viecpro-vis = "^0.1.10"
 pyzotero = "^1.5.5"
 apis-core = { path = "apis-core", develop = false }
+apis-bibsonomy = { path = "apis-bibsonomy", develop = false }
 
 [tool.poetry.group.dev]
 optional = true
