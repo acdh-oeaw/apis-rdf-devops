@@ -1,0 +1,24 @@
+#Github workflow to add issues and pull requests to project
+#
+#SPDX-FileCopyrightText: 2023 Birger Schacht
+#SPDX-License-Identifier: MIT
+
+name: Add issues and pull-requests to project
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Add issue or pull request to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/acdh-oeaw/projects/5
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
