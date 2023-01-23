@@ -12,6 +12,7 @@ pwd
 echo $APIS_RDF_ONTOLOGY
 python manage.py migrate
 python manage.py collectstatic --noinput
+[[ $CREATE_RELATIONSHIPS == "True" ]] && python manage.py create_relationships
 #ls /var/solr_new/paas_solr
 #python manage.py build_solr_schema --configure-directory /var/solr_new/paas_solr/conf --reload-core default
 #gunicorn apis.wsgi --timeout 120 --workers=3 --threads=3 --worker-connections=1000
