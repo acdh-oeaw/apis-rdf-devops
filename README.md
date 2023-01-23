@@ -103,7 +103,7 @@ The `docker-compose.yml` file included in the apis-rdf-devops repository include
 It uses a configuration stored in a file called `config` in the directory `$HOME/.ssh:/root/ssh:ro` (you need to change the path to wherever your config is stored). The config file basically sets the options for the ssh tunnel:
 
 ```sh
-Host apis-tunnel # You can use any name
+Host apis-tunnel
         HostName sisyphos.arz.oeaw.ac.at 
         IdentityFile ~/.ssh/id_rsa
         User apis
