@@ -32,8 +32,6 @@ ARG INSTALL_DEV=false
 
 COPY . /app
 
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
-
 ENV PYTHONPATH=/app
 
 # chown all the files to the app user
@@ -45,6 +43,8 @@ RUN chown -R app /usr/local
 # Switch to a non-root user, which is recommended by Heroku.
 USER app
 
+RUN poetry config virtualenvs.create false
+RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
 # 
 #CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 CMD ["bash", "start.sh"]
