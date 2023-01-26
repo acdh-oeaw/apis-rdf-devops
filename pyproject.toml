@@ -42,7 +42,7 @@ apis-bibsonomy = { git = "https://github.com/acdh-oeaw/apis-bibsonomy.git", bran
 optional = true
 
 [tool.poetry.group.highlighter.dependencies]
-apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "master" }
+apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "apis_rdf" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

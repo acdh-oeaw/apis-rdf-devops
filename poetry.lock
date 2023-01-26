@@ -137,8 +137,8 @@ apis-core = ">=0.16.0"
 [package.source]
 type = "git"
 url = "https://github.com/acdh-oeaw/apis_highlighter.git"
-reference = "master"
-resolved_reference = "993d0377ac3f39f77abbfff6cc40d7d64ae99cd5"
+reference = "apis_rdf"
+resolved_reference = "151e702174d6a0e6bcf5220f6a7502ec8f5e6a05"
 
 [[package]]
 name = "appnope"
@@ -3443,4 +3443,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<3.9"
-content-hash = "7036102a859a9851c6760abd315a81fbd36fda294770f5435598515c2421c2b9"
+content-hash = "8c16816f49b311f01bfe7e94e99120c3f6c97b11202a63c6593c1dcb0ac7b0f8"
