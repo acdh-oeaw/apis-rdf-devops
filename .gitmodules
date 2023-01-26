@@ -10,6 +10,3 @@
 	update = none
 	path = manuelle-korrektur-jelinek
 	url = ../../jwv/manuelle-korrektur.git
-[submodule "apis-bibsonomy"]
-	path = apis-bibsonomy
-	url = ../apis-bibsonomy.git
