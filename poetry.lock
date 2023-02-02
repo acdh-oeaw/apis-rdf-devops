@@ -69,7 +69,7 @@ apis-core = ">=0.16.0"
 type = "git"
 url = "https://github.com/acdh-oeaw/apis-bibsonomy.git"
 reference = "main"
-resolved_reference = "572146884f9970900129069d2b1ade22996d5bc4"
+resolved_reference = "29b81a1ab14066aa1f4b15093060ee760e9f968e"
 
 [[package]]
 name = "apis-core"
