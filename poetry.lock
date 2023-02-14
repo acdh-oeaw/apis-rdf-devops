@@ -937,6 +937,21 @@ files = [
 Django = ">=2.0.1"
 
 [[package]]
+name = "django-multiselectfield"
+version = "0.1.12"
+description = "Django multiple select field"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-multiselectfield-0.1.12.tar.gz", hash = "sha256:d0a4c71568fb2332c71478ffac9f8708e01314a35cf923dfd7a191343452f9f9"},
+    {file = "django_multiselectfield-0.1.12-py3-none-any.whl", hash = "sha256:c270faa7f80588214c55f2d68cbddb2add525c2aa830c216b8a198de914eb470"},
+]
+
+[package.dependencies]
+django = ">=1.4"
+
+[[package]]
 name = "django-reversion"
 version = "3.0.9"
 description = "An extension to the Django web framework that provides version control for model instances."
@@ -3430,4 +3445,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<3.9"
-content-hash = "8c16816f49b311f01bfe7e94e99120c3f6c97b11202a63c6593c1dcb0ac7b0f8"
+content-hash = "2499d44cfbf319f282dd9b0820531e91163ea18d0bf07ff32c3548695ce80929"
