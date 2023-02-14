@@ -44,6 +44,12 @@ optional = true
 [tool.poetry.group.highlighter.dependencies]
 apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "apis_rdf" }
 
+[tool.poetry.group.frischmuth]
+optional = true
+
+[tool.poetry.group.frischmuth.dependencies]
+django-multiselectfield = "^0.1.12"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
