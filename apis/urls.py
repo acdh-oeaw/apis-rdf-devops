@@ -38,7 +38,7 @@ else:
         ),
         path("admin/", admin.site.urls),
         path("info/", include("infos.urls", namespace="info")),
-        path("/", include("webpage.urls", namespace="webpage")),
+        path("", include("webpage.urls", namespace="webpage")),
     ]
 
 
@@ -51,12 +51,12 @@ if "transkribus" in settings.INSTALLED_APPS:
     urlpatterns = urlpatterns + [
         path("transkribus/", include("transkribus.urls")),
     ]
-
+"""
 if "apis_bibsonomy" in settings.INSTALLED_APPS:
     urlpatterns.append(
         path("bibsonomy/", include("apis_bibsonomy.urls", namespace="bibsonomy"))
     )
-
+"""
 if "oebl_irs_workflow" in settings.INSTALLED_APPS:
     urlpatterns.append(
         path(

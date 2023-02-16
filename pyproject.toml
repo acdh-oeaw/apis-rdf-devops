@@ -19,7 +19,7 @@ django-extensions = "^3.2.1"
 django-csp = "^3.7"
 #viecpro-vis = "^0.1.10"
 pyzotero = "^1.5.5"
-apis-core = { path = "apis-core", develop = false }
+apis-core = { path = "apis-core", develop = true }
 
 [tool.poetry.group.dev]
 optional = true
@@ -36,13 +36,13 @@ flake8 = "^6.0.0"
 optional = true
 
 [tool.poetry.group.bibsonomy.dependencies]
-apis-bibsonomy = { path = "../apis-bibsonomy", develop = false }
+apis-bibsonomy = { git = "https://github.com/acdh-oeaw/apis-bibsonomy.git", branch = "rh/fix/latest-dependency-versions" }
 
 [tool.poetry.group.highlighter]
 optional = true
 
 [tool.poetry.group.highlighter.dependencies]
-apis-highlighter = { path = "../apis_highlighter", develop = false }
+apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "rh/fix/latest-dependency-versions" }
 
 [tool.poetry.group.frischmuth]
 optional = true
