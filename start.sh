@@ -9,11 +9,9 @@ rm -f apis_ontology
 ln -s apis-ontologies/$APIS_RDF_ONTOLOGY apis_ontology
 ls -la
 pwd
-if [[ $POETRY_ADDITIONAL_GROUPS ]]; then
-    echo "installing additional groups $POETRY_ADDITIONAL_GROUPS"
-    poetry install --only $POETRY_ADDITIONAL_GROUPS
-fi
 echo $APIS_RDF_ONTOLOGY
+[[ -z $APIS_RDF_ONTOLOGY ]] || poetry install --only $APIS_RDF_ONTOLOGY
+[[ -z $POETRY_ADDITIONAL_GROUPS ]] || poetry install --only $POETRY_ADDITIONAL_GROUPS
 python manage.py migrate
 python manage.py collectstatic --noinput
 [[ $CREATE_RELATIONSHIPS == "True" ]] && python manage.py create_relationships
