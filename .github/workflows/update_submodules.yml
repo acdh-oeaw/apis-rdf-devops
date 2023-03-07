@@ -11,10 +11,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     name: 'Submodules Sync'
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -24,15 +28,15 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         submodules: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     # Update references
     - name: Git Sumbodule Update
       run: |
-        git pull --recurse-submodules
-        git submodule update --remote --recursive
+        git submodule foreach 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin && git checkout origin/main'
 
     - name: Commit update
       run: |
