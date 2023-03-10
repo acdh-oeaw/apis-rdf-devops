@@ -134,12 +134,6 @@
                  aria-expanded="false">Relations
                 <span class="caret"/>
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for ent in relations_list %}
-                  <a class="dropdown-item"
-                     href="{% url 'apis:apis_relations:generic_relations_list' ent %}">{{ ent|title }}</a>
-                {% endfor %}
-              </div>
             </li>
           </ul>
 
