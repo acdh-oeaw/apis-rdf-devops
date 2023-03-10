@@ -48,7 +48,7 @@ class Command(BaseCommand):
         def check_tempentityclass():
             tec_fields_counter_dict = {}
             for tec in TempEntityClass.objects.all():
-                entity_class_context = ("EntityClass: ", tec.self_content_type.model_class())
+                entity_class_context = ("EntityClass: ", tec.self_contenttype.model_class())
                 fields_counter_dict = tec_fields_counter_dict.get(entity_class_context, {})
                 update_field_counter_if_true(tec, fields_counter_dict, "review")
                 update_field_counter_if_not_none(tec, fields_counter_dict, "start_date")
@@ -146,8 +146,8 @@ class Command(BaseCommand):
                 entity_class_obj = temptriple_context[2]
                 prop_instance = temptriple_context[3]
                 for temptriple in TempTriple.objects.filter(
-                    subj__self_content_type=caching.get_contenttype_of_class(entity_class_subj),
-                    obj__self_content_type=caching.get_contenttype_of_class(entity_class_obj),
+                    subj__self_contenttype=caching.get_contenttype_of_class(entity_class_subj),
+                    obj__self_contenttype=caching.get_contenttype_of_class(entity_class_obj),
                     prop=prop_instance,
                 ):
                     if (
