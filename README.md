@@ -174,6 +174,10 @@ prints out the relationship labels (or "properties") which were created:
 $ python manage.py create_relationships --settings=apis_ontology.settings.local_settings
 ```
 
+(If you are running APIS in a container based on the provided Dockerfile, this
+command is run automatically if you are setting the `CREATE_RELATIONSHIPS`
+environment variable to `True`)
+
 Note: the above workflow for handling relationships is a workaround
 since properties are currently not defined as separate classes but instances
 as a result of a complicated trade-off.

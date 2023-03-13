@@ -18,7 +18,16 @@ jobs:
     name: Add issue or pull request to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@RELEASE_VERSION
+      - name: "Check if ADD_TO_PROJECT_PAT exists"
+        env: 
+            github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+        if: ${{ env.github-token == '' }}
+        run: |
+          echo "The secret ADD_TO_PROJECT_PAT is not available; please go to 'settings > secrets > actions' to create it"
+      - uses: actions/add-to-project@v0.4.0
+        env:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+        if: ${{ env.github-token != '' }}
         with:
           project-url: https://github.com/orgs/acdh-oeaw/projects/5
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
