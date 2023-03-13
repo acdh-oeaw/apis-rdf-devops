@@ -123,7 +123,7 @@ class Command(BaseCommand):
                     f"\n'prop_entity_to_reification'"
                     f"\n'prop_reification_to_entity'"
                     f"\n'NewReificationClass'"
-                    f"\nTake the fields from above and add them to 'NewReificationClass'\n\”"
+                    f"\nTake the fields from above and add them to 'NewReificationClass'\n\n”"
                 )
         
         def copy_fields_from_tempentityclass(tec_fields_counter_dict, prefix_str):
