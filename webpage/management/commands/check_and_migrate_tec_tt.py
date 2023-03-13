@@ -15,12 +15,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         field_tmp_mapping = {
             "review": 'review = models.BooleanField(default=False, help_text="Should be set to True, if the data record holds up quality standards.")',
-            "start_date": 'start_date = models.DateField(blank=True, null=True)',
-            "start_start_date": 'start_start_date = models.DateField(blank=True, null=True)',
-            "start_end_date": 'start_end_date = models.DateField(blank=True, null=True)',
-            "end_date": 'end_date = models.DateField(blank=True, null=True)',
-            "end_start_date": 'end_start_date = models.DateField(blank=True, null=True)',
-            "end_end_date": 'end_end_date = models.DateField(blank=True, null=True)',
+            "start_date": 'start_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
+            "start_start_date": 'start_start_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
+            "start_end_date": 'start_end_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
+            "end_date": 'end_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
+            "end_start_date": 'end_start_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
+            "end_end_date": 'end_end_date = models.DateField(blank=True, null=True) # WARNING: Unless you provide a custom parsing logic, the exposed date field would only allow YYYY-MM-DD format. Perhaps put a CharField instead, and reparse later?',
             "start_date_written": 'start_date_written = models.CharField(max_length=255, blank=True, null=True, verbose_name="Start")',
             "end_date_written": 'end_date_written = models.CharField(max_length=255, blank=True, null=True, verbose_name="End")',
             "text": 'text = models.ManyToManyField("apis_metainfo.Text", blank=True)',
@@ -123,7 +123,7 @@ class Command(BaseCommand):
                     f"\n'prop_entity_to_reification'"
                     f"\n'prop_reification_to_entity'"
                     f"\n'NewReificationClass'"
-                    f"\nTake the fields from above and add them to 'NewReificationClass'\n\n”"
+                    f"\nTake the fields from above and add them to 'NewReificationClass'\n\n"
                 )
         
         def copy_fields_from_tempentityclass(tec_fields_counter_dict, prefix_str):
@@ -150,27 +150,69 @@ class Command(BaseCommand):
                     obj__self_contenttype=caching.get_contenttype_of_class(entity_class_obj),
                     prop=prop_instance,
                 ):
+                    #TODO: Replace these if here
+                    
+                    # check for old employment relations
                     if (
-                        entity_class_subj is E40_Legal_Body
-                        and entity_class_obj is F3_Manifestation_Product_Type
-                        and prop_instance == Property.objects.get(name="is publisher of")
+                        entity_class_subj is Person
+                        and entity_class_obj is Institution
+                        and prop_instance == Property.objects.get(name="was employed at")
                     ):
-                        reification_instance = Example_E40_to_F3_Reification.objects.create()
-                        for field in fields_counter_dict.keys():
-                            setattr(reification_instance, field, getattr(temptriple, field))
-                        reification_instance.save()
+                        # create an employment reification, fetch data from temptriple
+                        employment = Employment.objects.create(
+                            salary=int(temptriple.notes), # careful about something like this
+                            employment_begin=temptriple.start_date_written,
+                            employment_end=temptriple.end_date_written,
+                        )
+                        employment.save()
+                        # relate subject entity of temptriple to reification
                         Triple.objects.create(
                             subj=temptriple.subj,
-                            obj=reification_instance,
-                            prop=Property.objects.get(name="E40_to_Reification"),
+                            obj=employment,
+                            prop=Property.objects.get(name="had (employment)"),
+                        )
+                        # relate object entity of temptriple to reification
+                        Triple.objects.create(
+                            subj=employment,
+                            obj=temptriple.obj,
+                            prop=Property.objects.get(name="(employment) at"),
+                        )
+                        # finally delete temptriple
+                        temptriple.delete()
+                    # same for supervisor relation
+                    elif (
+                        entity_class_subj is Person
+                        and entity_class_obj is Person
+                        and prop_instance == Property.objects.get(name="is supervisor of")
+                    ):
+                        supervision = Supervision.objects.create(
+                            task_area=temptriple.notes,
+                            supervision_begin=temptriple.start_date_written,
+                            supervision_end=temptriple.end_date_written,
+                        )
+                        supervision.save()
+                        Triple.objects.create(
+                            subj=temptriple.subj,
+                            obj=supervision,
+                            prop=Property.objects.get(name="carries (supervision)"),
                         )
                         Triple.objects.create(
-                            subj=reification_instance,
+                            subj=supervision,
                             obj=temptriple.obj,
-                            prop=Property.objects.get(name="Reification_to_F3"),
+                            prop=Property.objects.get(name="under (supervision)"),
                         )
+                        temptriple.delete()
+                    # add more cases
                     # elif ():
                     #   ...
+                
+                # finally, delete the property
+                prop_instance.delete()
+                
+            # finally, iterate over all remaining temptriples, carry them over to new ones, delete
+            for tt in TempTriple.objects.all():
+                Triple.objects.create(subj=tt.subj, obj=tt.obj, prop=tt.prop)
+                tt.delete()
 
         model_class = options["model_class_to_process"]
         if model_class == "tec":
@@ -181,7 +223,7 @@ class Command(BaseCommand):
         elif model_class == "tt":
             tt_fields_counter_dict = check_temptriple()
             print_tmp_fields_tt(tt_fields_counter_dict, prefix_str="")
-            # copy_fields_from_temptriple(tt_fields_counter_dict)
+            copy_fields_from_temptriple(tt_fields_counter_dict)
         else:
             raise Exception("no valid model_class was passed. Use either 'tec' or 'tt'")
         
