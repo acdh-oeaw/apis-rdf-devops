@@ -223,7 +223,7 @@ class Command(BaseCommand):
         elif model_class == "tt":
             tt_fields_counter_dict = check_temptriple()
             print_tmp_fields_tt(tt_fields_counter_dict, prefix_str="")
-            copy_fields_from_temptriple(tt_fields_counter_dict)
+            # copy_fields_from_temptriple(tt_fields_counter_dict)
         else:
             raise Exception("no valid model_class was passed. Use either 'tec' or 'tt'")
         
