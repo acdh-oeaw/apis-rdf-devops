@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update submodules"]
+    types:
+      - completed
 
 # on:
 #   workflow_run:
