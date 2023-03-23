@@ -2,7 +2,6 @@
 {% load static %}
 {% load webpage_extras %}
 {% load browsing_extras %}
-{% load infos_extras %}
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -97,8 +96,6 @@
                 <span class="caret"/>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'infos:about-the-project' %}">About the project</a>
-                <a class="dropdown-item" href="{% url 'infos:project-team' %}">Team</a>
                 <a class="dropdown-item" href="{% url 'webpage:staticpage' template='imprint' %}">
                   Imprint | Impressum</a>
               </div>
@@ -222,16 +219,6 @@
             Austrian Centre for Digital Humanities (ACDH) of the Austrian Academy of Sciences
           </div>
         </div>
-        {% project_insts as insts %}
-        {% for x in insts %}
-          <div class="col">
-            <a href="{{ x.website }}" target="_blank" rel="noopener" aria-label="{{ x.abbr }}">
-              <img src="{{ x.logo_url }}" alt="{{ x.abbr }}" title="{{ x.name }}">
-            </a>
-            <br/>
-            {{ x.name }}
-          </div>
-        {% endfor %}
       </div>
     </div>
   </div>
@@ -242,7 +229,6 @@
       {% if DB_NAME %}
         <div class="footer-imprint-bar">
           <div>{{ DB_NAME }}</div>
-          <div><a href="{% url 'infos:projectinst_browse' %}">Customize project partners</a></div>
         </div>
       {% endif %}
     {% endif %}
