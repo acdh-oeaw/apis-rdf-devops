@@ -36,7 +36,7 @@ flake8 = "^6.0.0"
 optional = true
 [tool.poetry.group.sicprod.dependencies]
 apis-bibsonomy = { git = "https://github.com/acdh-oeaw/apis-bibsonomy.git", branch = "main" }
-apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "apis_rdf" }
+apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "main" }
 
 [tool.poetry.group.frischmuth]
 optional = true
