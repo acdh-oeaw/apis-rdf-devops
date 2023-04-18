@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.11
 #RUN addgroup --system app && adduser --system --group app
 ARG USERNAME=app
 ARG USER_UID=1000
