@@ -81,7 +81,7 @@ develop = false
 [package.dependencies]
 acdh-django-charts = "^0.5.3"
 convertdate = "^2.3.0"
-Django = "^4.2"
+Django = "^4.1"
 django-admin-csvexport = "^1.9"
 django-autocomplete-light = "~3.9.4"
 django-cors-headers = "^3.5.0"
@@ -694,19 +694,19 @@ files = [
 
 [[package]]
 name = "django"
-version = "4.2"
+version = "4.1.8"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "Django-4.2-py3-none-any.whl", hash = "sha256:ad33ed68db9398f5dfb33282704925bce044bef4261cd4fb59e4e7f9ae505a78"},
-    {file = "Django-4.2.tar.gz", hash = "sha256:c36e2ab12824e2ac36afa8b2515a70c53c7742f0d6eaefa7311ec379558db997"},
+    {file = "Django-4.1.8-py3-none-any.whl", hash = "sha256:dba9dd0bf8b748aa9c98d6c679f8b1c0bfa43124844bea9425ad9ba0cd5e65c3"},
+    {file = "Django-4.1.8.tar.gz", hash = "sha256:43253f4b4a2c3a1694cd52d3517847271934c84dbd060ca0e82a9f90e569dab3"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.6.0,<4"
-sqlparse = ">=0.3.1"
+asgiref = ">=3.5.2,<4"
+sqlparse = ">=0.2.2"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
 [package.extras]
@@ -3370,4 +3370,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "b164e5a950d99b24b5a0973bd89b6a96e2b735b7f3503b7857acd7e853239d72"
+content-hash = "676f1eda6e17b2746ff4825dcada2665a0a2ac0a4af14fb096bcc47ea72743b5"
