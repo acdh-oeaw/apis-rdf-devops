@@ -141,7 +141,7 @@ jobs:
         APP_NAME: sicprod-dev-test
         APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
         SERVICE_ID: "21704"
-        PUBLIC_URL: "https://sicprod-test.acdh-dev.oeaw.ac.at"
+        PUBLIC_URL: "https://sicprod-test.acdh-ch-dev.oeaw.ac.at"
         POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
         environment: "SiCProD Test"
         default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
