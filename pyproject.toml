@@ -38,6 +38,12 @@ optional = true
 apis-bibsonomy = { git = "https://github.com/acdh-oeaw/apis-bibsonomy.git", branch = "main" }
 apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "main" }
 
+[tool.poetry.group.sicprod-test]
+optional = true
+[tool.poetry.group.sicprod-test.dependencies]
+apis-bibsonomy = { git = "https://github.com/acdh-oeaw/apis-bibsonomy.git", branch = "main" }
+apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", branch = "main" }
+
 [tool.poetry.group.frischmuth]
 optional = true
 [tool.poetry.group.frischmuth.dependencies]
