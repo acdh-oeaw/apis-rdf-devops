@@ -40,7 +40,7 @@ test = ["coverage"]
 
 [[package]]
 name = "apis-bibsonomy"
-version = "0.5.0"
+version = "0.7.0"
 description = "Bibsonomy/Zotero plugin for managing refernces in APIS framework"
 category = "dev"
 optional = false
@@ -51,7 +51,7 @@ develop = false
 type = "git"
 url = "https://github.com/acdh-oeaw/apis-bibsonomy.git"
 reference = "main"
-resolved_reference = "878eff3382dd4da74aed33db8417fc872582cffc"
+resolved_reference = "7ea92f534112b7b588aaf7832f144b0b6770590a"
 
 [[package]]
 name = "apis-core"
