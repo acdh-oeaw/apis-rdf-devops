@@ -12,6 +12,7 @@ pwd
 echo $APIS_RDF_ONTOLOGY
 [[ -z $APIS_RDF_ONTOLOGY ]] || poetry install --only $APIS_RDF_ONTOLOGY
 [[ -z $POETRY_ADDITIONAL_GROUPS ]] || poetry install --only $POETRY_ADDITIONAL_GROUPS
+[[ -f apis-ontologies/${APIS_RDF_ONTOLOGY}/start.sh ]] && bash apis-ontologies/${APIS_RDF_ONTOLOGY}/start.sh
 python manage.py migrate
 python manage.py collectstatic --noinput
 [[ $CREATE_RELATIONSHIPS == "True" ]] && python manage.py create_relationships
