@@ -48,6 +48,7 @@ apis-highlighter = { git = "https://github.com/acdh-oeaw/apis_highlighter.git", 
 optional = true
 [tool.poetry.group.frischmuth.dependencies]
 django-multiselectfield = "^0.1.12"
+sharepy = "^2.0.0"
 
 [tool.poetry.group.jelinek]
 optional = true
