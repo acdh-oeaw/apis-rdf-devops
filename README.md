@@ -130,6 +130,12 @@ At the repository's root, set up your virtual env and activate it:
 $ pipenv install
 $ pipenv shell
 ```
+or 
+```sh
+poetry install # include --with dev and your specific project group wherever applicable
+poetry shell
+```
+
 
 ### Django setup
 
