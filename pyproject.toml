@@ -49,6 +49,7 @@ optional = true
 [tool.poetry.group.frischmuth.dependencies]
 django-multiselectfield = "^0.1.12"
 sharepy = "^2.0.0"
+openpyxl = "^3.1.2"
 
 [tool.poetry.group.jelinek]
 optional = true
