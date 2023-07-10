@@ -26,13 +26,13 @@ To get Git to link the superproject and its submodules together correctly, it is
 To clone the superproject along with its default submodules, run:
 
 ```sh
-$ git clone --recurse-submodules git@github.com:acdh-oeaw/apis-rdf-devops.git
+git clone --recurse-submodules git@github.com:acdh-oeaw/apis-rdf-devops.git
 ```
 
 If you originally cloned the superproject as a standalone repository *without* submodules, you can still collect them later on. Use the following command at the project's root to do so:
 
 ```sh
-$ git submodule update --init --recursive
+git submodule update --init --recursive
 ```
 
 #### Install app-specific submodules
@@ -44,7 +44,7 @@ Submodules *not relevant to all APIS Ontologies apps* are set to `update = none`
 After (re)enabling your additional submodules, have Git clone them with:
 
 ```sh
-$ git submodule update
+git submodule update
 ```
 
 ### Symlink relevant APIS Ontologies files
@@ -56,7 +56,7 @@ When deploying to a live server or when developing locally with Docker, an envir
 For local development without Docker, the symlink needs to be created manually in the apis-rdf-devops root directory:
 
 ```sh
-$ ln -s apis-ontologies/YOUR_PROJECT_DIR apis_ontology
+ln -s apis-ontologies/YOUR_PROJECT_DIR apis_ontology
 ```
 
 In case the project directory does not exist yet, you will first have to create it, see [Create a new APIS Ontologies application](https://github.com/acdh-oeaw/apis-ontologies#create-a-new-apis-ontologies-application) in the APIS Ontologies README.
@@ -127,8 +127,8 @@ With these settings in place, you can access databases on helios under host `db`
 At the repository's root, set up your virtual env and activate it:
 
 ```sh
-$ pipenv install
-$ pipenv shell
+pipenv install
+pipenv shell
 ```
 or 
 ```sh
@@ -146,19 +146,19 @@ First, make sure all settings needed for local development are in place, see [Co
 Next, within either your VS Code dev container or your Python Virtual Environment, run `manage.py` at the project root using your local settings file, like so:
 
 ```sh
-$ python manage.py version --settings=apis_ontology.settings.local_settings
+python manage.py version --settings=apis_ontology.settings.local_settings
 ```
 
 If a new database was set up, it first needs to be migrated:
 
 ```sh
-$ python manage.py migrate --settings=apis_ontology.settings.local_settings
+python manage.py migrate --settings=apis_ontology.settings.local_settings
 ```
 
 Next, start a Django shell...
 
 ```sh
-$ python manage.py shell --settings=apis_ontology.settings.local_settings
+python manage.py shell --settings=apis_ontology.settings.local_settings
 ```
 
 ... and create an admin user (make up your own credentials):
@@ -177,7 +177,7 @@ The following management command does this for you and, on success,
 prints out the relationship labels (or "properties") which were created:
 
 ```sh
-$ python manage.py create_relationships --settings=apis_ontology.settings.local_settings
+python manage.py create_relationships --settings=apis_ontology.settings.local_settings
 ```
 
 (If you are running APIS in a container based on the provided Dockerfile, this
@@ -192,7 +192,7 @@ as a result of a complicated trade-off.
 Finally, start the server to:
 
 ```sh
-$ python manage.py runserver --settings=apis_ontology.settings.local_settings
+python manage.py runserver --settings=apis_ontology.settings.local_settings
 ```
 
 ### Ontology-specific scripts
@@ -202,5 +202,5 @@ Projects occasionally need some processing logic only within their project scope
 The Jelinek project, for example, contains a script `import_tei.py` – full path using symlink: `apis_ontology/ontology_specific_scripts/import_tei.py` – which can be run like so:
 
 ```sh
-$ python manage.py run_ontology_script import_tei --settings=apis_ontology.settings.local_settings
+python manage.py run_ontology_script import_tei --settings=apis_ontology.settings.local_settings
 ```
