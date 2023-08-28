@@ -1,7 +1,7 @@
 [submodule "apis_core_submodule"]
 	path = apis-core
 	url = ../apis-core-rdf.git
-	branch = main
+	branch = main-for-devops
 [submodule "apis_ontologies_submodule"]
 	path = apis-ontologies
 	url = ../apis-ontologies.git
