@@ -36,7 +36,8 @@ jobs:
     # Update references
     - name: Git Sumbodule Update
       run: |
-        git submodule foreach 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin && git checkout origin/main'
+        git submodule update apis-ontologies
+        #git submodule foreach 'git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin && git checkout origin/main'
 
     - name: Commit update
       run: |
